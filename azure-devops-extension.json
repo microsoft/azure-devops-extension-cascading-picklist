@@ -1,0 +1,45 @@
+{
+  "manifestVersion": 1.0,
+  "id": "cascading-picklists-extension",
+  "publisher": "akovalyov",
+  "version": "0.1.3",
+  "name": "Cascading Lists",
+  "description": "Extension allows to define cascading behavior for picklists in work item form.",
+  "public": false,
+  "categories": ["Azure Boards"],
+  "scopes": ["vso.work", "vso.work_write"],
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "contributions": [
+    {
+      "id": "cascading-lists-wit-observer",
+      "type": "ms.vss-work-web.work-item-notifications",
+      "description": "Observer modifies behavior of a work item form to support cascading picklists.",
+      "targets": ["ms.vss-work-web.work-item-form"],
+      "properties": {
+        "name": "Cascading Lists Observer",
+        "uri": "/dist/observer.html"
+      }
+    },
+    {
+      "id": "cascading-lists-config-hub",
+      "type": "ms.vss-web.hub",
+      "description": "Configuration hub for a cascading lists",
+      "targets": ["ms.vss-web.project-admin-hub-group"],
+      "properties": {
+        "name": "Cascading Lists Configuration Hub",
+        "order": 1,
+        "uri": "/dist/confighub.html"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "dist",
+      "addressable": true
+    }
+  ]
+}
