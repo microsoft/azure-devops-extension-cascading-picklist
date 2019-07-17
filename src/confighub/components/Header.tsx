@@ -6,6 +6,7 @@ import {
   HeaderTitleRow,
   TitleSize,
 } from 'azure-devops-ui/Header';
+import { Dropdown } from 'azure-devops-ui/Dropdown';
 import { IStatusProps, Status, Statuses, StatusSize } from 'azure-devops-ui/Status';
 import * as React from 'react';
 import styled from 'styled-components';
@@ -36,6 +37,15 @@ const Header = ({ title, isStatusOk, onSaveClick }: IHeaderProps) => {
         </HeaderTitleRow>
       </HeaderTitleArea>
       <HeaderSideContainer>
+        <Dropdown
+          placeholder='Work Item Type'
+          width={250}
+          items={[
+            { id: 'item1', text: 'User Story' },
+            { id: 'item2', text: 'Bug' },
+            { id: 'item3', text: 'Task' },
+          ]}
+        />
         <Button text='Save configuration' primary={true} onClick={onSaveClick} />
         <Status {...statusProps} size={StatusSize.l} />
       </HeaderSideContainer>

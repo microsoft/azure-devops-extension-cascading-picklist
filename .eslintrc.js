@@ -19,6 +19,9 @@ module.exports = {
     // Force no ununsed variables
     'no-unused-vars': 2,
 
+    // Allow object type
+    '@typescript-eslint/ban-types': 0,
+
     // Force windows linebreak styles
     'linebreak-style': [2, 'windows'],
 

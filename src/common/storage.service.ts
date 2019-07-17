@@ -1,5 +1,5 @@
+import { CommonServiceIds, IExtensionDataService } from 'azure-devops-extension-api';
 import * as SDK from 'azure-devops-extension-sdk';
-import { IExtensionDataService, CommonServiceIds } from 'azure-devops-extension-api';
 import { CascadeConfiguration } from './types';
 
 enum ScopeType {
@@ -7,7 +7,11 @@ enum ScopeType {
   User = 'User',
 }
 
-class CascadingConfigurationStorageService {
+enum ConfigurationType {
+  Manifest = 'manifest',
+}
+
+class StorageService {
   private storageKey: string;
   private scopeType: ScopeType;
 
@@ -27,7 +31,7 @@ class CascadingConfigurationStorageService {
     return this.dataService;
   }
 
-  public async getCascadingConfiguration(): Promise<CascadeConfiguration> {
+  public async getData(): Promise<Object> {
     const dataService = await this.getDataService();
     const dataManager = await dataService.getExtensionDataManager(
       SDK.getExtensionContext().id,
@@ -43,18 +47,41 @@ class CascadingConfigurationStorageService {
     return cascadingConfiguration;
   }
 
-  public async writeCascadingConfiguration(
-    cascade: CascadeConfiguration
-  ): Promise<CascadeConfiguration> {
+  public async setData(data: Object): Promise<Object> {
     const dataService = await this.getDataService();
     const dataManager = await dataService.getExtensionDataManager(
       SDK.getExtensionContext().id,
       await SDK.getAccessToken()
     );
-    return dataManager.setValue(this.storageKey, cascade, {
+    return dataManager.setValue(this.storageKey, data, {
       scopeType: this.scopeType,
     });
   }
 }
 
-export { ScopeType, CascadingConfigurationStorageService };
+class ConfigurationStorage {
+  private storageService: StorageService;
+
+  public constructor(
+    configurationType: ConfigurationType,
+    projectId: string,
+    workItemType: string
+  ) {
+    this.storageService = new StorageService(
+      `${configurationType}|${projectId}|${workItemType}`,
+      ScopeType.Default
+    );
+  }
+
+  public async getConfiguration(): Promise<CascadeConfiguration> {
+    return this.storageService.getData() as Promise<CascadeConfiguration>;
+  }
+
+  public async setConfiguration(
+    configuration: CascadeConfiguration
+  ): Promise<CascadeConfiguration> {
+    return this.storageService.setData(configuration) as Promise<CascadeConfiguration>;
+  }
+}
+
+export { ScopeType, StorageService, ConfigurationStorage, ConfigurationType };

@@ -1,5 +1,10 @@
+import {
+  CommonServiceIds,
+  IProjectPageService,
+} from 'azure-devops-extension-api/Common/CommonServices';
+import * as SDK from 'azure-devops-extension-sdk';
 import { useEffect, useState } from 'react';
-import { ScopeType, CascadingConfigurationStorageService } from '../../common/storage.service';
+import { ConfigurationStorage, ConfigurationType } from '../../common/storage.service';
 
 function useConfigurationStorage(): [
   object,
@@ -14,11 +19,16 @@ function useConfigurationStorage(): [
 
   useEffect(() => {
     (async function() {
-      const storageService = new CascadingConfigurationStorageService(
-        'configuration',
-        ScopeType.Default
+      const projectInfoService = await SDK.getService<IProjectPageService>(
+        CommonServiceIds.ProjectPageService
       );
-      const cascade = await storageService.getCascadingConfiguration();
+      const project = await projectInfoService.getProject();
+      const configStorageService = new ConfigurationStorage(
+        ConfigurationType.Manifest,
+        project.id,
+        'User Story'
+      );
+      const cascade = await configStorageService.getConfiguration();
       setConfig(cascade);
       setConfigText(JSON.stringify(cascade, null, 2));
     })();
@@ -28,11 +38,16 @@ function useConfigurationStorage(): [
     if (!status) {
       throw new Error('Configuration is invalid');
     }
-    const storageService = new CascadingConfigurationStorageService(
-      'configuration',
-      ScopeType.Default
+    const projectInfoService = await SDK.getService<IProjectPageService>(
+      CommonServiceIds.ProjectPageService
     );
-    const cascade = await storageService.writeCascadingConfiguration(config);
+    const project = await projectInfoService.getProject();
+    const configStorageService = new ConfigurationStorage(
+      ConfigurationType.Manifest,
+      project.id,
+      'User Story'
+    );
+    const cascade = await configStorageService.setConfiguration(config);
     setConfig(cascade);
   }
 
