@@ -3,8 +3,11 @@ import {
   IProjectPageService,
 } from 'azure-devops-extension-api/Common/CommonServices';
 import * as SDK from 'azure-devops-extension-sdk';
+import { WorkItemTrackingRestClient } from 'azure-devops-extension-api/WorkItemTracking/WorkItemTrackingClient';
 import { useEffect, useState } from 'react';
 import { ConfigurationStorage, ConfigurationType } from '../../common/storage.service';
+import { WorkItemType } from 'azure-devops-extension-api/WorkItemTracking/WorkItemTracking';
+import { getClient } from 'azure-devops-extension-api';
 
 function useConfigurationStorage(): [
   object,
@@ -23,14 +26,15 @@ function useConfigurationStorage(): [
         CommonServiceIds.ProjectPageService
       );
       const project = await projectInfoService.getProject();
-      const configStorageService = new ConfigurationStorage(
-        ConfigurationType.Manifest,
-        project.id,
-        'User Story'
-      );
-      const cascade = await configStorageService.getConfiguration();
-      setConfig(cascade);
-      setConfigText(JSON.stringify(cascade, null, 2));
+      const configStorageService = new ConfigurationStorage(ConfigurationType.Manifest, project.id);
+      try {
+        const cascade = await configStorageService.getConfiguration();
+        setConfig(cascade);
+        setConfigText(JSON.stringify(cascade, null, 2));
+      } catch (error) {
+        setConfig({});
+        setConfigText('');
+      }
     })();
   }, []);
 
@@ -42,11 +46,7 @@ function useConfigurationStorage(): [
       CommonServiceIds.ProjectPageService
     );
     const project = await projectInfoService.getProject();
-    const configStorageService = new ConfigurationStorage(
-      ConfigurationType.Manifest,
-      project.id,
-      'User Story'
-    );
+    const configStorageService = new ConfigurationStorage(ConfigurationType.Manifest, project.id);
     const cascade = await configStorageService.setConfiguration(config);
     setConfig(cascade);
   }
@@ -66,4 +66,23 @@ function useConfigurationStorage(): [
   return [config, configText, status, saveConfig, updateConfigurationStorage];
 }
 
-export { useConfigurationStorage };
+function useFetchWorkItemTypes(): WorkItemType[] {
+  const [workItemTypes, setWorkItemTypes] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const projectInfoService = await SDK.getService<IProjectPageService>(
+        CommonServiceIds.ProjectPageService
+      );
+      const project = await projectInfoService.getProject();
+
+      const witRestClient = await getClient(WorkItemTrackingRestClient);
+      const witTypes = await witRestClient.getWorkItemTypes(project.name);
+      setWorkItemTypes(witTypes);
+    })();
+  }, []);
+
+  return workItemTypes;
+}
+
+export { useConfigurationStorage, useFetchWorkItemTypes };

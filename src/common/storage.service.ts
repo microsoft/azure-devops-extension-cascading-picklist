@@ -37,14 +37,9 @@ class StorageService {
       SDK.getExtensionContext().id,
       await SDK.getAccessToken()
     );
-    const cascadingConfiguration: CascadeConfiguration = await dataManager.getValue(
-      this.storageKey,
-      {
-        scopeType: this.scopeType,
-      }
-    );
-
-    return cascadingConfiguration;
+    return dataManager.getValue(this.storageKey, {
+      scopeType: this.scopeType,
+    });
   }
 
   public async setData(data: Object): Promise<Object> {
@@ -62,13 +57,9 @@ class StorageService {
 class ConfigurationStorage {
   private storageService: StorageService;
 
-  public constructor(
-    configurationType: ConfigurationType,
-    projectId: string,
-    workItemType: string
-  ) {
+  public constructor(configurationType: ConfigurationType, projectId: string) {
     this.storageService = new StorageService(
-      `${configurationType}|${projectId}|${workItemType}`,
+      `${configurationType}|${projectId}`,
       ScopeType.Default
     );
   }
