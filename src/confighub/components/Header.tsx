@@ -6,13 +6,18 @@ import {
   HeaderTitleRow,
   TitleSize,
 } from 'azure-devops-ui/Header';
+import { Dropdown } from 'azure-devops-ui/Dropdown';
 import { IStatusProps, Status, Statuses, StatusSize } from 'azure-devops-ui/Status';
 import * as React from 'react';
 import styled from 'styled-components';
+import { IListBoxItem } from 'azure-devops-ui/ListBox';
 
 interface IHeaderProps {
   title: string;
   isStatusOk: boolean;
+  dropdownPlaceholder: string;
+  dropdownItems: IListBoxItem[];
+  onDropdownSelect: (event: React.SyntheticEvent<HTMLElement>, item: IListBoxItem) => void;
   onSaveClick: () => void | Promise<void>;
 }
 
@@ -25,7 +30,14 @@ const HeaderSideContainer = styled.div`
   }
 `;
 
-const Header = ({ title, isStatusOk, onSaveClick }: IHeaderProps) => {
+const Header = ({
+  title,
+  isStatusOk,
+  onSaveClick,
+  onDropdownSelect,
+  dropdownItems,
+  dropdownPlaceholder,
+}: IHeaderProps) => {
   const statusProps: IStatusProps = isStatusOk ? Statuses.Success : Statuses.Failed;
 
   return (
@@ -36,6 +48,12 @@ const Header = ({ title, isStatusOk, onSaveClick }: IHeaderProps) => {
         </HeaderTitleRow>
       </HeaderTitleArea>
       <HeaderSideContainer>
+        <Dropdown
+          width={250}
+          placeholder={dropdownPlaceholder}
+          items={dropdownItems}
+          onSelect={onDropdownSelect}
+        />
         <Button text='Save configuration' primary={true} onClick={onSaveClick} />
         <Status {...statusProps} size={StatusSize.l} />
       </HeaderSideContainer>

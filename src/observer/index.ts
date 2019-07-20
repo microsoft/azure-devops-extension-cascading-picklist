@@ -25,7 +25,12 @@ SDK.init({
       CommonServiceIds.ProjectPageService
     );
     const project = await projectInfoService.getProject();
-    const configurationStorage = new ConfigurationStorage(ConfigurationType.Manifest, project.id);
+    const workItemType = (await workItemFormService.getFieldValue('System.WorkItemType')) as string;
+    const configurationStorage = new ConfigurationStorage(
+      ConfigurationType.Manifest,
+      project.id,
+      workItemType
+    );
 
     const cascade = await configurationStorage.getConfiguration();
     const cascadingService = new CascadingFieldsService(workItemFormService, cascade);

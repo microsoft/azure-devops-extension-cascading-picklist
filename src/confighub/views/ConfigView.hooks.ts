@@ -9,13 +9,9 @@ import { ConfigurationStorage, ConfigurationType } from '../../common/storage.se
 import { WorkItemType } from 'azure-devops-extension-api/WorkItemTracking/WorkItemTracking';
 import { getClient } from 'azure-devops-extension-api';
 
-function useConfigurationStorage(): [
-  object,
-  string,
-  boolean,
-  (value: string) => void,
-  () => Promise<void>
-] {
+function useConfigurationStorage(
+  workItemTypeName: string
+): [object, string, boolean, (value: string) => void, () => Promise<void>] {
   const [config, setConfig] = useState({});
   const [configText, setConfigText] = useState('');
   const [status, setStatus] = useState(true);
@@ -26,19 +22,29 @@ function useConfigurationStorage(): [
         CommonServiceIds.ProjectPageService
       );
       const project = await projectInfoService.getProject();
-      const configStorageService = new ConfigurationStorage(ConfigurationType.Manifest, project.id);
+      const configStorageService = new ConfigurationStorage(
+        ConfigurationType.Manifest,
+        project.id,
+        workItemTypeName
+      );
       try {
         const cascade = await configStorageService.getConfiguration();
-        setConfig(cascade);
-        setConfigText(JSON.stringify(cascade, null, 2));
+        if (cascade === undefined) {
+          setConfig({});
+          setConfigText('');
+        } else {
+          setConfig(cascade);
+          setConfigText(JSON.stringify(cascade, null, 2));
+        }
       } catch (error) {
         setConfig({});
         setConfigText('');
       }
     })();
-  }, []);
+  }, [workItemTypeName]);
 
   async function updateConfigurationStorage() {
+    // TODO: make status validation within a hook rather that trust a component.
     if (!status) {
       throw new Error('Configuration is invalid');
     }
@@ -46,7 +52,11 @@ function useConfigurationStorage(): [
       CommonServiceIds.ProjectPageService
     );
     const project = await projectInfoService.getProject();
-    const configStorageService = new ConfigurationStorage(ConfigurationType.Manifest, project.id);
+    const configStorageService = new ConfigurationStorage(
+      ConfigurationType.Manifest,
+      project.id,
+      workItemTypeName
+    );
     const cascade = await configStorageService.setConfiguration(config);
     setConfig(cascade);
   }

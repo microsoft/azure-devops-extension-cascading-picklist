@@ -57,9 +57,16 @@ class StorageService {
 class ConfigurationStorage {
   private storageService: StorageService;
 
-  public constructor(configurationType: ConfigurationType, projectId: string) {
+  public constructor(
+    configurationType: ConfigurationType,
+    projectId: string,
+    workItemType: string
+  ) {
+    if (workItemType === '' || workItemType === undefined) {
+      throw new Error('Work item type cannot be empty or undefined.');
+    }
     this.storageService = new StorageService(
-      `${configurationType}|${projectId}`,
+      `${configurationType}|${projectId}|${workItemType}`,
       ScopeType.Default
     );
   }
