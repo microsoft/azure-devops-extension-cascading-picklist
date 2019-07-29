@@ -1,5 +1,5 @@
+import { CommonServiceIds, IExtensionDataService } from 'azure-devops-extension-api';
 import * as SDK from 'azure-devops-extension-sdk';
-import { IExtensionDataService, CommonServiceIds } from 'azure-devops-extension-api';
 import { CascadeConfiguration } from './types';
 
 enum ScopeType {
@@ -7,7 +7,11 @@ enum ScopeType {
   User = 'User',
 }
 
-class CascadingConfigurationStorageService {
+enum ConfigurationType {
+  Manifest = 'manifest',
+}
+
+class StorageService {
   private storageKey: string;
   private scopeType: ScopeType;
 
@@ -27,34 +31,55 @@ class CascadingConfigurationStorageService {
     return this.dataService;
   }
 
-  public async getCascadingConfiguration(): Promise<CascadeConfiguration> {
+  public async getData(): Promise<Object> {
     const dataService = await this.getDataService();
     const dataManager = await dataService.getExtensionDataManager(
       SDK.getExtensionContext().id,
       await SDK.getAccessToken()
     );
-    const cascadingConfiguration: CascadeConfiguration = await dataManager.getValue(
-      this.storageKey,
-      {
-        scopeType: this.scopeType,
-      }
-    );
-
-    return cascadingConfiguration;
+    return dataManager.getValue(this.storageKey, {
+      scopeType: this.scopeType,
+    });
   }
 
-  public async writeCascadingConfiguration(
-    cascade: CascadeConfiguration
-  ): Promise<CascadeConfiguration> {
+  public async setData(data: Object): Promise<Object> {
     const dataService = await this.getDataService();
     const dataManager = await dataService.getExtensionDataManager(
       SDK.getExtensionContext().id,
       await SDK.getAccessToken()
     );
-    return dataManager.setValue(this.storageKey, cascade, {
+    return dataManager.setValue(this.storageKey, data, {
       scopeType: this.scopeType,
     });
   }
 }
 
-export { ScopeType, CascadingConfigurationStorageService };
+class ConfigurationStorage {
+  private storageService: StorageService;
+
+  public constructor(
+    configurationType: ConfigurationType,
+    projectId: string,
+    workItemType: string
+  ) {
+    if (workItemType === '' || workItemType === undefined) {
+      throw new Error('Work item type cannot be empty or undefined.');
+    }
+    this.storageService = new StorageService(
+      `${configurationType}|${projectId}|${workItemType}`,
+      ScopeType.Default
+    );
+  }
+
+  public async getConfiguration(): Promise<Object> {
+    return this.storageService.getData();
+  }
+
+  public async setConfiguration(
+    configuration: Object
+  ): Promise<Object> {
+    return this.storageService.setData(configuration) as Promise<Object>;
+  }
+}
+
+export { ScopeType, StorageService, ConfigurationStorage, ConfigurationType };

@@ -1,12 +1,16 @@
 import {
+  CommonServiceIds,
+  IProjectPageService,
+} from 'azure-devops-extension-api/Common/CommonServices';
+import {
+  IWorkItemFieldChangedArgs,
   IWorkItemFormService,
   IWorkItemNotificationListener,
-  IWorkItemFieldChangedArgs,
   WorkItemTrackingServiceIds,
 } from 'azure-devops-extension-api/WorkItemTracking/WorkItemTrackingServices';
 import * as SDK from 'azure-devops-extension-sdk';
 import { CascadingFieldsService } from '../common/cascading.service';
-import { CascadingConfigurationStorageService, ScopeType } from '../common/storage.service';
+import { ManifestService } from '../common/manifest.service';
 
 SDK.init({
   applyTheme: true,
@@ -17,13 +21,14 @@ SDK.init({
       WorkItemTrackingServiceIds.WorkItemFormService
     );
 
-    const cascadeConfigurationService = new CascadingConfigurationStorageService(
-      'configuration',
-      ScopeType.Default
+    const projectInfoService = await SDK.getService<IProjectPageService>(
+      CommonServiceIds.ProjectPageService
     );
-    const cascade = await cascadeConfigurationService.getCascadingConfiguration();
-
-    const cascadingService = new CascadingFieldsService(workItemFormService, cascade);
+    const project = await projectInfoService.getProject();
+    const workItemType = (await workItemFormService.getFieldValue('System.WorkItemType')) as string;
+    const manifestService = new ManifestService(project.id, workItemType);
+    const manifest = await manifestService.getManifest();
+    const cascadingService = new CascadingFieldsService(workItemFormService, manifest.cascades);
 
     const provider: IWorkItemNotificationListener = {
       onLoaded: async () => await cascadingService.cascadeAll(),
@@ -37,6 +42,6 @@ SDK.init({
     };
 
     SDK.register<IWorkItemNotificationListener>(SDK.getContributionId(), provider);
-    SDK.notifyLoadSucceeded();
+    await SDK.notifyLoadSucceeded();
   }
 );
