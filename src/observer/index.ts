@@ -28,7 +28,6 @@ SDK.init({
     const workItemType = (await workItemFormService.getFieldValue('System.WorkItemType')) as string;
     const manifestService = new ManifestService(project.id, workItemType);
     const manifest = await manifestService.getManifest();
-    console.log(manifest.cascades);
     const cascadingService = new CascadingFieldsService(workItemFormService, manifest.cascades);
 
     const provider: IWorkItemNotificationListener = {

@@ -14,7 +14,7 @@ module.exports = {
     quotes: ['error', 'single'],
 
     // Allow logs
-    'no-console': 0,
+    'no-console': 1,
 
     // Force no ununsed variables
     'no-unused-vars': 2,
