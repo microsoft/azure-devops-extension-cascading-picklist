@@ -1,11 +1,11 @@
 {
   "manifestVersion": 1.0,
   "id": "cascading-picklists-extension",
-  "publisher": "akovalyov",
-  "version": "0.1.5",
+  "publisher": "ms-devlabs",
+  "version": "0.1.6",
   "name": "Cascading Lists",
   "description": "Extension allows to define cascading behavior for picklists in work item form.",
-  "public": false,
+  "public": true,
   "categories": ["Azure Boards"],
   "scopes": ["vso.work", "vso.work_write"],
   "targets": [
