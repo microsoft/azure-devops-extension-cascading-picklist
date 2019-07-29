@@ -10,3 +10,8 @@ export interface ICascade {
   alters: FieldName[];
   cascades: Record<FieldName, FieldOptions>;
 }
+
+export interface IManifest {
+  version?: string;
+  cascades?: CascadeConfiguration;
+}

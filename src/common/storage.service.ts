@@ -71,14 +71,14 @@ class ConfigurationStorage {
     );
   }
 
-  public async getConfiguration(): Promise<CascadeConfiguration> {
-    return this.storageService.getData() as Promise<CascadeConfiguration>;
+  public async getConfiguration(): Promise<Object> {
+    return this.storageService.getData();
   }
 
   public async setConfiguration(
-    configuration: CascadeConfiguration
-  ): Promise<CascadeConfiguration> {
-    return this.storageService.setData(configuration) as Promise<CascadeConfiguration>;
+    configuration: Object
+  ): Promise<Object> {
+    return this.storageService.setData(configuration) as Promise<Object>;
   }
 }
 

@@ -60,7 +60,7 @@ const ConfigView = () => {
             await showToast('Error saving configuration.', 2000);
           }
         }}
-        dropdownPlaceholder='Work item type'
+        dropdownPlaceholder=''
         dropdownItems={dropdownItems}
         onDropdownSelect={onWorkItemSelect}
         isStatusOk={status}

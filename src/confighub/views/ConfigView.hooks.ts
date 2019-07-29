@@ -5,9 +5,9 @@ import {
 import * as SDK from 'azure-devops-extension-sdk';
 import { WorkItemTrackingRestClient } from 'azure-devops-extension-api/WorkItemTracking/WorkItemTrackingClient';
 import { useEffect, useState } from 'react';
-import { ConfigurationStorage, ConfigurationType } from '../../common/storage.service';
 import { WorkItemType } from 'azure-devops-extension-api/WorkItemTracking/WorkItemTracking';
 import { getClient } from 'azure-devops-extension-api';
+import { ManifestService } from '../../common/manifest.service';
 
 function useConfigurationStorage(
   workItemTypeName: string
@@ -22,19 +22,17 @@ function useConfigurationStorage(
         CommonServiceIds.ProjectPageService
       );
       const project = await projectInfoService.getProject();
-      const configStorageService = new ConfigurationStorage(
-        ConfigurationType.Manifest,
-        project.id,
-        workItemTypeName
-      );
+
+      const manifestService = new ManifestService(project.id, workItemTypeName);
+
       try {
-        const cascade = await configStorageService.getConfiguration();
-        if (cascade === undefined) {
+        const manifest = await manifestService.getManifest();
+        if (manifest === undefined) {
           setConfig({});
           setConfigText('');
         } else {
-          setConfig(cascade);
-          setConfigText(JSON.stringify(cascade, null, 2));
+          setConfig(manifest);
+          setConfigText(JSON.stringify(manifest, null, 2));
         }
       } catch (error) {
         setConfig({});
@@ -52,13 +50,9 @@ function useConfigurationStorage(
       CommonServiceIds.ProjectPageService
     );
     const project = await projectInfoService.getProject();
-    const configStorageService = new ConfigurationStorage(
-      ConfigurationType.Manifest,
-      project.id,
-      workItemTypeName
-    );
-    const cascade = await configStorageService.setConfiguration(config);
-    setConfig(cascade);
+    const manifestService = new ManifestService(project.id, workItemTypeName);
+    const manifest = await manifestService.updateManifest(config);
+    setConfig(manifest);
   }
 
   function saveConfig(value: string): void {

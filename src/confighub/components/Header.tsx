@@ -48,7 +48,7 @@ const Header = ({
         </HeaderTitleRow>
       </HeaderTitleArea>
       <HeaderSideContainer>
-        <Dropdown
+        <Dropdown  
           width={250}
           placeholder={dropdownPlaceholder}
           items={dropdownItems}

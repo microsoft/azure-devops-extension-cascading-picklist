@@ -10,7 +10,7 @@ import {
 } from 'azure-devops-extension-api/WorkItemTracking/WorkItemTrackingServices';
 import * as SDK from 'azure-devops-extension-sdk';
 import { CascadingFieldsService } from '../common/cascading.service';
-import { ConfigurationStorage, ConfigurationType } from '../common/storage.service';
+import { ManifestService } from '../common/manifest.service';
 
 SDK.init({
   applyTheme: true,
@@ -26,14 +26,10 @@ SDK.init({
     );
     const project = await projectInfoService.getProject();
     const workItemType = (await workItemFormService.getFieldValue('System.WorkItemType')) as string;
-    const configurationStorage = new ConfigurationStorage(
-      ConfigurationType.Manifest,
-      project.id,
-      workItemType
-    );
-
-    const cascade = await configurationStorage.getConfiguration();
-    const cascadingService = new CascadingFieldsService(workItemFormService, cascade);
+    const manifestService = new ManifestService(project.id, workItemType);
+    const manifest = await manifestService.getManifest();
+    console.log(manifest.cascades);
+    const cascadingService = new CascadingFieldsService(workItemFormService, manifest.cascades);
 
     const provider: IWorkItemNotificationListener = {
       onLoaded: async () => await cascadingService.cascadeAll(),
