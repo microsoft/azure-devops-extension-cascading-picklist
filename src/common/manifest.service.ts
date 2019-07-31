@@ -1,11 +1,5 @@
 import { ConfigurationStorage, ConfigurationType } from './storage.service';
 import { IManifest } from './types';
-import {
-  StorageService,
-  ConfigurationType,
-  ScopeType,
-  ConfigurationStorage,
-} from './storage.service';
 
 
 class ManifestService {
@@ -25,3 +19,4 @@ class ManifestService {
 }
 
 export { ManifestService };
+
