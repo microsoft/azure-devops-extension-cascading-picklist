@@ -20,13 +20,11 @@ SDK.init({
     const workItemFormService = await SDK.getService<IWorkItemFormService>(
       WorkItemTrackingServiceIds.WorkItemFormService
     );
-
     const projectInfoService = await SDK.getService<IProjectPageService>(
       CommonServiceIds.ProjectPageService
     );
     const project = await projectInfoService.getProject();
-    const workItemType = (await workItemFormService.getFieldValue('System.WorkItemType')) as string;
-    const manifestService = new ManifestService(project.id, workItemType);
+    const manifestService = new ManifestService(project.id);
     const manifest = await manifestService.getManifest();
     const cascadingService = new CascadingFieldsService(workItemFormService, manifest.cascades);
 

@@ -1,6 +1,5 @@
 import { CommonServiceIds, IExtensionDataService } from 'azure-devops-extension-api';
 import * as SDK from 'azure-devops-extension-sdk';
-import { CascadeConfiguration } from './types';
 
 enum ScopeType {
   Default = 'Default',
@@ -57,16 +56,9 @@ class StorageService {
 class ConfigurationStorage {
   private storageService: StorageService;
 
-  public constructor(
-    configurationType: ConfigurationType,
-    projectId: string,
-    workItemType: string
-  ) {
-    if (workItemType === '' || workItemType === undefined) {
-      throw new Error('Work item type cannot be empty or undefined.');
-    }
+  public constructor(configurationType: ConfigurationType, projectId: string) {
     this.storageService = new StorageService(
-      `${configurationType}|${projectId}|${workItemType}`,
+      `${configurationType}|${projectId}`,
       ScopeType.Default
     );
   }
@@ -75,9 +67,7 @@ class ConfigurationStorage {
     return this.storageService.getData();
   }
 
-  public async setConfiguration(
-    configuration: Object
-  ): Promise<Object> {
+  public async setConfiguration(configuration: Object): Promise<Object> {
     return this.storageService.setData(configuration) as Promise<Object>;
   }
 }
