@@ -8,11 +8,28 @@
   "public": true,
   "categories": ["Azure Boards"],
   "scopes": ["vso.work", "vso.work_write"],
+  "tags": ["Cascading Picklists"],
+  "icons": {
+    "default": "images/icon-default.png",
+    "large": "images/icon-large.png"
+  },
+  "content": {
+    "details": {
+      "path": "marketplace/details.md"
+    },
+    "license": {
+      "path": "marketplace/license.md"
+    }
+  },
   "targets": [
     {
       "id": "Microsoft.VisualStudio.Services"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/azure-devops-extension-cascading-picklist"
+  },
   "contributions": [
     {
       "id": "cascading-lists-wit-observer",
@@ -37,6 +54,10 @@
     }
   ],
   "files": [
+    {
+      "path": "marketplace",
+      "addressable": true
+    },
     {
       "path": "dist",
       "addressable": true
