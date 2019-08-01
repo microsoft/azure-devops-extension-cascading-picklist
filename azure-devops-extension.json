@@ -47,7 +47,7 @@
       "description": "Configuration hub for a cascading lists",
       "targets": ["ms.vss-web.project-admin-hub-group"],
       "properties": {
-        "name": "Cascading Lists Configuration Hub",
+        "name": "Cascading Lists",
         "order": 1,
         "uri": "/dist/confighub.html"
       }
