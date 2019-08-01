@@ -1,23 +1,28 @@
 # cascading-picklists-extension
 
+This extension can be found in the [Azure DevOps Marketplace](http://marketplace.visualstudio.com)
+
 ## Cascading Picklists
 
-This extension uses the ```ms.vss-work-web.work-item-form``` contribution point that enables you to build a cascading picklist on the work item form. Cascading picklists are made up of two seperate fields. The parent field and a child field. The parent picklist will contain a list of values, that when a value is selected, will display the values in the child list.
+This extension uses the `ms.vss-work-web.work-item-form` contribution point that enables you to build a cascading picklist on the work item form. Cascading picklists are made up of two seperate fields. The parent field and a child field. The parent picklist will contain a list of values, that when a value is selected, will display the values in the child list.
 
 ![image](./images/picklist-demo.gif)
 
 ### Create a picklist
-First, create a picklist of parent values. Second, create a picklist of child values. This child picklist will contain __all__ possible values. We will configure how those values get displayed in the extension configuration.
 
-![image](./images/edit-picklist-1.png)
+First, create a picklist of parent values. Second, create a picklist of child values. This child picklist will contain **all** possible values. We will configure how those values get displayed in the extension configuration.
+
+![image](./images/picklist-child.png)
 
 ### Configure
-Once both picklists have been created and configured, you can configure what child picklist values will be displayed. You do this by going to the "Cascading Lists Configuration" section in project settings. From here, configure the value for the parent picklist, so that when selected, the child values will be displayed.
 
-![image](./images/picklist-config.png)
+Once both picklists have been created and configured, you can configure what child picklist values will be displayed. You do this by going to the "Cascading Lists" Hub in project settings. From here, configure the value for the parent picklist, so that when selected, the child values will be displayed.
+
+![image](./images/settings-hub-1.png)
 
 #### Tips
-1. You must know the refname of the custom piclist fields. You can use [List Fields REST API](https://docs.microsoft.com/en-us/rest/api/azure/devops/wit/fields/list?view=azure-devops-rest-5.0) if you need help finding the value.
+
+1. You must know the refname of the custom picklist fields. You can use [List Fields REST API](https://docs.microsoft.com/en-us/rest/api/azure/devops/wit/fields/list?view=azure-devops-rest-5.0) if you need help finding the value.
 
 2. The values setup in the picklist and the values in the configuration must be an exact match. There is not validation to check or correct spelling mistakes.
 

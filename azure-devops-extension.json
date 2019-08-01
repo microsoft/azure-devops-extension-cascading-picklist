@@ -2,17 +2,34 @@
   "manifestVersion": 1.0,
   "id": "cascading-picklists-extension",
   "publisher": "ms-devlabs",
-  "version": "0.1.6",
+  "version": "0.1.9",
   "name": "Cascading Lists",
   "description": "Extension allows to define cascading behavior for picklists in work item form.",
   "public": true,
   "categories": ["Azure Boards"],
-  "scopes": ["vso.work", "vso.work_write"],
+  "tags": ["Cascading Picklists"],
+  "icons": {
+    "default": "images/icon-default.png",
+    "large": "images/icon-large.png"
+  },
+  "content": {
+    "details": {
+      "path": "marketplace/details.md"
+    },
+    "license": {
+      "path": "marketplace/license.md"
+    }
+  },
   "targets": [
     {
       "id": "Microsoft.VisualStudio.Services"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/azure-devops-extension-cascading-picklist"
+  },
+  "scopes": ["vso.work", "vso.work_write"],
   "contributions": [
     {
       "id": "cascading-lists-wit-observer",
@@ -30,13 +47,21 @@
       "description": "Configuration hub for a cascading lists",
       "targets": ["ms.vss-web.project-admin-hub-group"],
       "properties": {
-        "name": "Cascading Lists Configuration Hub",
+        "name": "Cascading Lists",
         "order": 1,
         "uri": "/dist/confighub.html"
       }
     }
   ],
   "files": [
+    {
+      "path": "images",
+      "addressable": true
+    },
+    {
+      "path": "marketplace",
+      "addressable": true
+    },
     {
       "path": "dist",
       "addressable": true
