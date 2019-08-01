@@ -2,7 +2,7 @@
   "manifestVersion": 1.0,
   "id": "cascading-picklists-extension",
   "publisher": "ms-devlabs",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "name": "Cascading Lists",
   "description": "Extension allows to define cascading behavior for picklists in work item form.",
   "public": true,
@@ -54,6 +54,10 @@
     }
   ],
   "files": [
+    {
+      "path": "images",
+      "addressable": true
+    },
     {
       "path": "marketplace",
       "addressable": true
