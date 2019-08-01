@@ -18,6 +18,11 @@ Have you ever wanted to have a picklist show only subset of values depending on 
 
 #### How does it work?
 
+1. Create the custom fields for both the parent (major release) and child (minor release) picklists
+2. Add all the possible value for the minor release. This should include values for both Blue and Red releases
+
+   ![minor release picklist](dist/images/picklist-child.png "Configure Picklist")
+
 ```
 {
   "version": "1.0",
@@ -31,7 +36,7 @@ Have you ever wanted to have a picklist show only subset of values depending on 
         ]
       },
       "Release Red": {
-        "Microsoft.VSTS.Common.Severity": [         
+        "Custom.MinorRelease": [         
           "Red.A",
           "Red.B",
           "Red.C"          
