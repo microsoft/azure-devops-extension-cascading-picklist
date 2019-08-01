@@ -25,7 +25,10 @@ SDK.init({
     );
     const project = await projectInfoService.getProject();
     const manifestService = new ManifestService(project.id);
-    const manifest = await manifestService.getManifest();
+    let manifest = await manifestService.getManifest();
+    if (manifest == null) {
+      manifest = await manifestService.createDefaultManifest();
+    }
     const cascadingService = new CascadingFieldsService(workItemFormService, manifest.cascades);
 
     const provider: IWorkItemNotificationListener = {
