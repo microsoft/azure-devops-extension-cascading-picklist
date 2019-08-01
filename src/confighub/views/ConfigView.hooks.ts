@@ -34,7 +34,7 @@ function useConfigurationStorage(): [
     if (!status) {
       throw new Error('Configuration is invalid');
     }
-    
+
     const projectInfoService = await SDK.getService<IProjectPageService>(
       CommonServiceIds.ProjectPageService
     );
@@ -50,17 +50,12 @@ function useConfigurationStorage(): [
       );
       const project = await projectInfoService.getProject();
       const manifestService = new ManifestService(project.id);
-
-      try {
-        const manifest = await manifestService.getManifest();
-        if (manifest === undefined) {
-          saveDraft('');
-        } else {
-          saveDraft(JSON.stringify(manifest, null, 2));
-        }
-      } catch (error) {
-        saveDraft('');
+      let manifest = await manifestService.getManifest();
+      if (manifest == null) {
+        manifest = await manifestService.createDefaultManifest();
       }
+
+      saveDraft(JSON.stringify(manifest, null, 2));
     })();
   }, []);
 
