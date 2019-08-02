@@ -23,7 +23,7 @@ const EditorOptions = {
 };
 
 const ConfigView = () => {
-  const [configText, status, saveConfig, updateConfigurationStorage] = useConfigurationStorage();
+  const [configText, status, saveDraft, publishConfig] = useConfigurationStorage();
   const showToast = useExternalToast();
 
   function editorDidMount(editor) {
@@ -32,20 +32,16 @@ const ConfigView = () => {
 
   async function onSaveButtonClick() {
     try {
-      await updateConfigurationStorage();
+      await publishConfig();
       await showToast('Configuration succesfully saved.', 2000);
     } catch (error) {
-      await showToast('Error saving configuration.', 2000);
+      await showToast(`${(error as Error).message}`, 2000);
     }
   }
 
   return (
     <ConfigViewContainer>
-      <Header
-        title='Cascading List Config'
-        onSaveClick={onSaveButtonClick}
-        isStatusOk={status}
-      />
+      <Header title='Cascading Lists Config' onSaveClick={onSaveButtonClick} status={status} />
       <EditorContainer>
         <MonacoEditor
           height='800'
@@ -55,7 +51,7 @@ const ConfigView = () => {
           language='json'
           editorDidMount={editorDidMount}
           onChange={newValue => {
-            saveConfig(newValue);
+            saveDraft(newValue);
           }}
         />
       </EditorContainer>

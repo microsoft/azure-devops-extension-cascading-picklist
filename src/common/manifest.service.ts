@@ -8,12 +8,14 @@ const ManifestMetadata = {
 };
 
 enum ValidationErrorCode {
+  SyntaxError,
+  MissingRequiredProperty,
   InvalidVersion,
   InvalidCascade,
 }
 
 interface IManifestValidationError {
-  code: number;
+  code: ValidationErrorCode;
   description: string;
 }
 
@@ -41,16 +43,30 @@ class ManifestService {
 }
 
 class ManifestValidationService {
+  private dirtyManifest: Object;
   private manifest: IManifest;
   private validators: Validator[] = [this.checkVersion];
+  private requiredProperties = ['version', 'cascades'];
 
-  public constructor(manifest: IManifest) {
-    this.manifest = manifest;
+  public constructor(manifest: Object) {
+    this.dirtyManifest = manifest;
+  }
+
+  public ensureValidManifest(): IManifest {
+    if (this.manifest == null) {
+      throw new Error('Manifest is not valid');
+    }
+    return this.manifest;
   }
 
   public validate(): null | IManifestValidationError[] {
-    const manifest = this.manifest;
+    const manifest = this.dirtyManifest;
     const errors: IManifestValidationError[] = [];
+
+    const error = this.checkRequiredProperties(manifest, this.requiredProperties);
+    if (error) {
+      return [error];
+    }
 
     for (let validator of this.validators) {
       const error = validator(manifest);
@@ -59,6 +75,27 @@ class ManifestValidationService {
 
     if (errors.length > 0) {
       return errors;
+    }
+
+    this.manifest = this.dirtyManifest;
+    return null;
+  }
+
+  private checkRequiredProperties(
+    manifest: IManifest,
+    requiredProperties: string[]
+  ): null | IManifestValidationError {
+    const missingProperties: string[] = [];
+    for (let property of requiredProperties) {
+      if (!manifest.hasOwnProperty(property)) {
+        missingProperties.push(property);
+      }
+    }
+    if (missingProperties.length > 0) {
+      return {
+        code: ValidationErrorCode.MissingRequiredProperty,
+        description: `Property missing: ${missingProperties.join(', ')}`,
+      };
     }
     return null;
   }
@@ -74,4 +111,4 @@ class ManifestValidationService {
   }
 }
 
-export { ManifestService, ManifestValidationService };
+export { ManifestService, ManifestValidationService, IManifestValidationError };

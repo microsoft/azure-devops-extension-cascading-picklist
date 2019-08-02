@@ -7,32 +7,59 @@ import { WorkItemTrackingRestClient } from 'azure-devops-extension-api/WorkItemT
 import { useEffect, useState } from 'react';
 import { WorkItemType } from 'azure-devops-extension-api/WorkItemTracking/WorkItemTracking';
 import { getClient } from 'azure-devops-extension-api';
-import { ManifestService } from '../../common/manifest.service';
+import {
+  ManifestService,
+  ManifestValidationService,
+  IManifestValidationError,
+} from '../../common/manifest.service';
+
+interface IStatus {
+  status: boolean;
+  errors: IManifestValidationError[];
+}
 
 function useConfigurationStorage(): [
   string,
-  boolean,
+  IStatus,
   (value: string) => void,
   () => Promise<void>
 ] {
-  const [config, setConfig] = useState({});
-  const [configText, setConfigText] = useState('');
-  const [status, setStatus] = useState(true);
+  const [config, setConfig] = useState<Object>({});
+  const [configText, setConfigText] = useState<string>('');
+  const [status, setStatus] = useState<IStatus>({
+    status: true,
+    errors: [],
+  });
 
   function saveDraft(value: string): void {
     try {
-      const parsedConfig = JSON.parse(value);
-      setConfig(parsedConfig);
-      setStatus(true);
+      const parsedConfig: Object = JSON.parse(value);
+      const manifestValidationService = new ManifestValidationService(parsedConfig);
+      const errors = manifestValidationService.validate();
+      if (errors && errors.length > 0) {
+        setStatus({
+          status: false,
+          errors: errors,
+        });
+      } else {
+        setConfig(parsedConfig);
+        setStatus({
+          status: true,
+          errors: [],
+        });
+      }
     } catch (error) {
-      setStatus(false);
+      setStatus({
+        status: false,
+        errors: [],
+      });
     }
     setConfigText(value);
   }
 
   async function publishConfig(): Promise<void> {
-    if (!status) {
-      throw new Error('Configuration is invalid');
+    if (!status.status) {
+      throw new Error(`${status.errors.map(error => error.description).join(';')}`);
     }
 
     const projectInfoService = await SDK.getService<IProjectPageService>(
@@ -81,4 +108,4 @@ function useFetchWorkItemTypes(): WorkItemType[] {
   return workItemTypes;
 }
 
-export { useConfigurationStorage, useFetchWorkItemTypes };
+export { useConfigurationStorage, useFetchWorkItemTypes, IStatus };
