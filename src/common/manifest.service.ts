@@ -11,7 +11,7 @@ enum ValidationErrorCode {
   SyntaxError,
   MissingRequiredProperty,
   InvalidVersion,
-  InvalidCascade,
+  InvalidCascadeType,
 }
 
 interface IManifestValidationError {
@@ -45,7 +45,7 @@ class ManifestService {
 class ManifestValidationService {
   private dirtyManifest: Object;
   private manifest: IManifest;
-  private validators: Validator[] = [this.checkVersion];
+  private validators: Validator[] = [this.checkVersion, this.checkCascadesType];
   private requiredProperties = ['version', 'cascades'];
 
   public constructor(manifest: Object) {
@@ -105,6 +105,22 @@ class ManifestValidationService {
       return {
         code: ValidationErrorCode.InvalidVersion,
         description: `Unknown version: ${manifest.version}`,
+      };
+    }
+    return null;
+  }
+
+  private checkCascadesType(manifest: IManifest): null | IManifestValidationError {
+    if (typeof manifest.cascades !== 'object') {
+      return {
+        code: ValidationErrorCode.InvalidCascadeType,
+        description: `"cascades" should be an object, not ${typeof manifest.cascades}`,
+      };
+    }
+    if (Array.isArray(manifest.cascades)) {
+      return {
+        code: ValidationErrorCode.InvalidCascadeType,
+        description: '"cascades" should be an object, not an array',
       };
     }
     return null;
