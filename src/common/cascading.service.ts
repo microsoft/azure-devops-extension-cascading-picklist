@@ -159,12 +159,21 @@ class CascadeValidationService {
       const fields = await witRestClient.getFields(project.id);
       this.cachedFields = fields;
     }
-
     const fieldList = this.cachedFields.map(field => field.referenceName);
-    const invalidFields = Object.keys(cascades).filter(field => !fieldList.includes(field));
 
-    if (invalidFields.length > 0) {
-      return invalidFields;
+    // Check fields correctness for config root
+    let invalidFieldsTotal = Object.keys(cascades).filter(field => !fieldList.includes(field));
+
+    // Check fields on the lower level of config
+    Object.values(cascades).map(fieldValues => {
+      Object.values(fieldValues).map(innerFields => {
+        const invalidFields = Object.keys(innerFields).filter(field => !fieldList.includes(field));
+        invalidFieldsTotal = [...invalidFieldsTotal, ...invalidFields];
+      });
+    });
+
+    if (invalidFieldsTotal.length > 0) {
+      return invalidFieldsTotal;
     }
 
     return null;

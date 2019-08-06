@@ -126,7 +126,7 @@ class ManifestValidationService {
     if (errors && errors.length > 0) {
       return {
         code: ValidationErrorCode.InvalidCascadeConfiguration,
-        description: `Invalid fields: ${errors.join(',')}`,
+        description: `Incorrect fields: ${errors.join(', ')}`,
       };
     }
     return null;
