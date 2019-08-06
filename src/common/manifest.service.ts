@@ -133,4 +133,9 @@ class ManifestValidationService {
   }
 }
 
-export { ManifestService, ManifestValidationService, IManifestValidationError };
+export {
+  ManifestService,
+  ManifestValidationService,
+  IManifestValidationError,
+  ValidationErrorCode,
+};

@@ -5,6 +5,7 @@ import {
   IManifestValidationError,
   ManifestService,
   ManifestValidationService,
+  ValidationErrorCode,
 } from '../../common/manifest.service';
 
 interface IStatus {
@@ -46,7 +47,12 @@ function useConfigurationStorage(): [
     } catch (error) {
       setStatus({
         status: false,
-        errors: [],
+        errors: [
+          {
+            code: ValidationErrorCode.SyntaxError,
+            description: 'Config syntax error',
+          },
+        ],
       });
     }
   }
