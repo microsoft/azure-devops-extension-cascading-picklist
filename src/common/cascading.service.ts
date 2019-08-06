@@ -1,4 +1,12 @@
+import {
+  CommonServiceIds,
+  getClient,
+  IProjectPageService,
+} from 'azure-devops-extension-api/Common';
+import { WorkItemField } from 'azure-devops-extension-api/WorkItemTracking/WorkItemTracking';
+import { WorkItemTrackingRestClient } from 'azure-devops-extension-api/WorkItemTracking/WorkItemTrackingClient';
 import { IWorkItemFormService } from 'azure-devops-extension-api/WorkItemTracking/WorkItemTrackingServices';
+import * as SDK from 'azure-devops-extension-sdk';
 import flatten from 'lodash/flatten';
 import intersection from 'lodash/intersection';
 import uniq from 'lodash/uniq';
@@ -9,6 +17,8 @@ import {
   FieldOptionsFlags,
   ICascade,
 } from './types';
+
+type InvalidField = string;
 
 class CascadingFieldsService {
   private workItemService: IWorkItemFormService;
@@ -131,4 +141,43 @@ class CascadingFieldsService {
   }
 }
 
-export { CascadingFieldsService };
+interface ICascadeValidatorError {
+  description: string;
+}
+
+class CascadeValidationService {
+  private cachedFields: WorkItemField[];
+
+  public async validateCascades(cascades: CascadeConfiguration): Promise<null | InvalidField[]> {
+    const projectInfoService = await SDK.getService<IProjectPageService>(
+      CommonServiceIds.ProjectPageService
+    );
+    const project = await projectInfoService.getProject();
+
+    if (this.cachedFields == null) {
+      const witRestClient = await getClient(WorkItemTrackingRestClient);
+      const fields = await witRestClient.getFields(project.id);
+      this.cachedFields = fields;
+    }
+    const fieldList = this.cachedFields.map(field => field.referenceName);
+
+    // Check fields correctness for config root
+    let invalidFieldsTotal = Object.keys(cascades).filter(field => !fieldList.includes(field));
+
+    // Check fields on the lower level of config
+    Object.values(cascades).map(fieldValues => {
+      Object.values(fieldValues).map(innerFields => {
+        const invalidFields = Object.keys(innerFields).filter(field => !fieldList.includes(field));
+        invalidFieldsTotal = [...invalidFieldsTotal, ...invalidFields];
+      });
+    });
+
+    if (invalidFieldsTotal.length > 0) {
+      return invalidFieldsTotal;
+    }
+
+    return null;
+  }
+}
+
+export { CascadingFieldsService, CascadeValidationService, ICascadeValidatorError };

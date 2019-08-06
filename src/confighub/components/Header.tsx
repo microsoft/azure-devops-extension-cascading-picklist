@@ -9,10 +9,11 @@ import {
 import { IStatusProps, Status, Statuses, StatusSize } from 'azure-devops-ui/Status';
 import * as React from 'react';
 import styled from 'styled-components';
+import { IStatus } from '../hooks/configstorage';
 
 interface IHeaderProps {
   title: string;
-  isStatusOk: boolean;
+  status: IStatus;
   onSaveClick: () => void | Promise<void>;
 }
 
@@ -25,8 +26,8 @@ const HeaderSideContainer = styled.div`
   }
 `;
 
-const Header = ({ title, isStatusOk, onSaveClick }: IHeaderProps) => {
-  const statusProps: IStatusProps = isStatusOk ? Statuses.Success : Statuses.Failed;
+const Header = ({ title, status, onSaveClick }: IHeaderProps) => {
+  const statusProps: IStatusProps = status.status ? Statuses.Success : Statuses.Failed;
 
   return (
     <CustomHeader>
