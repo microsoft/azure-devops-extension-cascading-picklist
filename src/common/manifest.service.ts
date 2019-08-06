@@ -1,7 +1,8 @@
 import { ConfigurationStorage, ConfigurationType } from './storage.service';
 import { IManifest } from './types';
+import { CascadeValidationService } from './cascading.service';
 
-type Validator = (manifest: IManifest) => null | IManifestValidationError;
+type Validator = (manifest: IManifest) => Promise<null | IManifestValidationError>;
 
 const ManifestMetadata = {
   availableVersions: [1],
@@ -12,6 +13,7 @@ enum ValidationErrorCode {
   MissingRequiredProperty,
   InvalidVersion,
   InvalidCascadeType,
+  InvalidCascadeConfiguration,
 }
 
 interface IManifestValidationError {
@@ -43,33 +45,25 @@ class ManifestService {
 }
 
 class ManifestValidationService {
-  private dirtyManifest: Object;
-  private manifest: IManifest;
-  private validators: Validator[] = [this.checkVersion, this.checkCascadesType];
+  private validators: Validator[] = [this.checkVersion, this.checkCascadesType, this.checkCascades];
   private requiredProperties = ['version', 'cascades'];
 
-  public constructor(manifest: Object) {
-    this.dirtyManifest = manifest;
+  private cascadeValidator: CascadeValidationService;
+
+  public constructor() {
+    this.cascadeValidator = new CascadeValidationService();
   }
 
-  public ensureValidManifest(): IManifest {
-    if (this.manifest == null) {
-      throw new Error('Manifest is not valid');
-    }
-    return this.manifest;
-  }
-
-  public validate(): null | IManifestValidationError[] {
-    const manifest = this.dirtyManifest;
+  public async validate(manifest: Object): Promise<null | IManifestValidationError[]> {
     const errors: IManifestValidationError[] = [];
 
-    const error = this.checkRequiredProperties(manifest, this.requiredProperties);
+    const error = await this.checkRequiredProperties(manifest, this.requiredProperties);
     if (error) {
       return [error];
     }
 
     for (let validator of this.validators) {
-      const error = validator(manifest);
+      const error = await validator.call(this, manifest);
       error ? errors.push(error) : null;
     }
 
@@ -77,14 +71,13 @@ class ManifestValidationService {
       return errors;
     }
 
-    this.manifest = this.dirtyManifest;
     return null;
   }
 
-  private checkRequiredProperties(
+  private async checkRequiredProperties(
     manifest: IManifest,
     requiredProperties: string[]
-  ): null | IManifestValidationError {
+  ): Promise<null | IManifestValidationError> {
     const missingProperties: string[] = [];
     for (let property of requiredProperties) {
       if (!manifest.hasOwnProperty(property)) {
@@ -100,7 +93,7 @@ class ManifestValidationService {
     return null;
   }
 
-  private checkVersion(manifest: IManifest): null | IManifestValidationError {
+  private async checkVersion(manifest: IManifest): Promise<null | IManifestValidationError> {
     if (!ManifestMetadata.availableVersions.includes(Number(manifest.version))) {
       return {
         code: ValidationErrorCode.InvalidVersion,
@@ -110,7 +103,7 @@ class ManifestValidationService {
     return null;
   }
 
-  private checkCascadesType(manifest: IManifest): null | IManifestValidationError {
+  private async checkCascadesType(manifest: IManifest): Promise<null | IManifestValidationError> {
     if (typeof manifest.cascades !== 'object') {
       return {
         code: ValidationErrorCode.InvalidCascadeType,
@@ -121,6 +114,19 @@ class ManifestValidationService {
       return {
         code: ValidationErrorCode.InvalidCascadeType,
         description: '"cascades" should be an object, not an array',
+      };
+    }
+    return null;
+  }
+
+  private async checkCascades(manifest: IManifest): Promise<null | IManifestValidationError> {
+    const validator = this.cascadeValidator;
+    const errors = await validator.validateCascades(manifest.cascades);
+
+    if (errors && errors.length > 0) {
+      return {
+        code: ValidationErrorCode.InvalidCascadeConfiguration,
+        description: `Invalid fields: ${errors.join(',')}`,
       };
     }
     return null;

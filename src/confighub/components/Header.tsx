@@ -9,7 +9,7 @@ import {
 import { IStatusProps, Status, Statuses, StatusSize } from 'azure-devops-ui/Status';
 import * as React from 'react';
 import styled from 'styled-components';
-import { IStatus } from '../views/ConfigView.hooks';
+import { IStatus } from '../hooks/configstorage';
 
 interface IHeaderProps {
   title: string;

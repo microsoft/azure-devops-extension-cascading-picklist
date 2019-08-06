@@ -3,7 +3,7 @@ import MonacoEditor from 'react-monaco-editor';
 import styled from 'styled-components';
 import { Header } from '../components/Header';
 import { useExternalToast } from '../hooks/toast';
-import { useConfigurationStorage } from './ConfigView.hooks';
+import { useConfigurationStorage } from '../hooks/configstorage';
 
 const EditorContainer = styled.div`
   display: flex;
