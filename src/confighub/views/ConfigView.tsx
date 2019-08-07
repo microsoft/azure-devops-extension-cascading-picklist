@@ -6,7 +6,7 @@ import { useConfigurationStorage } from '../hooks/configstorage';
 import { useExternalToast } from '../hooks/toast';
 import { FieldsTable, FieldTableItem } from '../components/FieldsTable';
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider';
-import { useProjectFieldsList } from '../hooks/projectfieldlist';
+import { useProjectPicklistsList } from '../hooks/projectfieldlist';
 
 const EditorContainer = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ const EditorOptions = {
 const ConfigView: React.FC = () => {
   const [configText, status, saveDraft, publishConfig] = useConfigurationStorage();
   const showToast = useExternalToast();
-  const fields = useProjectFieldsList();
+  const fields = useProjectPicklistsList();
 
   function editorDidMount(editor) {
     editor.getModel().updateOptions({ tabSize: 2 });

@@ -4,7 +4,7 @@ import { FieldTableItem } from '../components/FieldsTable';
 import { IProjectPageService, CommonServiceIds, getClient } from 'azure-devops-extension-api';
 import { WorkItemTrackingRestClient } from 'azure-devops-extension-api/WorkItemTracking/WorkItemTrackingClient';
 
-function useProjectFieldsList(): FieldTableItem[] {
+function useProjectPicklistsList(): FieldTableItem[] {
   const [fields, setFields] = useState<FieldTableItem[]>([]);
 
   useEffect(() => {
@@ -15,11 +15,15 @@ function useProjectFieldsList(): FieldTableItem[] {
       const project = await projectInfoService.getProject();
       const witRestClient = await getClient(WorkItemTrackingRestClient);
       const fields = await witRestClient.getFields(project.id);
-      setFields(fields.map(field => ({ name: field.name, reference: field.referenceName })));
+      setFields(
+        fields
+          .filter(field => field.isPicklist || field.isPicklistSuggested)
+          .map(field => ({ name: field.name, reference: field.referenceName }))
+      );
     })();
   }, []);
 
   return fields;
 }
 
-export { useProjectFieldsList };
+export { useProjectPicklistsList };
