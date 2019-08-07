@@ -2,8 +2,11 @@ import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import styled from 'styled-components';
 import { Header } from '../components/Header';
-import { useExternalToast } from '../hooks/toast';
 import { useConfigurationStorage } from '../hooks/configstorage';
+import { useExternalToast } from '../hooks/toast';
+import { FieldsTable, FieldTableItem } from '../components/FieldsTable';
+import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider';
+import { useProjectFieldsList } from '../hooks/projectfieldlist';
 
 const EditorContainer = styled.div`
   display: flex;
@@ -22,9 +25,10 @@ const EditorOptions = {
   selectOnLineNumbers: true,
 };
 
-const ConfigView = () => {
+const ConfigView: React.FC = () => {
   const [configText, status, saveDraft, publishConfig] = useConfigurationStorage();
   const showToast = useExternalToast();
+  const fields = useProjectFieldsList();
 
   function editorDidMount(editor) {
     editor.getModel().updateOptions({ tabSize: 2 });
@@ -55,6 +59,7 @@ const ConfigView = () => {
           }}
         />
       </EditorContainer>
+      <FieldsTable itemProvider={new ArrayItemProvider<FieldTableItem>(fields)} />
     </ConfigViewContainer>
   );
 };
