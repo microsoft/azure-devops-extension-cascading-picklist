@@ -23,11 +23,8 @@
     "lodash": "^4.17.15",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-json-view": "^1.19.1",
     "react-monaco-editor": "^0.26.2",
-    "reflect-metadata": "^0.1.13",
-    "styled-components": "^4.3.1",
-    "uuid": "^3.3.2"
+    "styled-components": "^4.3.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.135",
@@ -35,7 +32,6 @@
     "@types/react-dom": "^16.8.4",
     "@types/react-monaco-editor": "^0.16.0",
     "@types/styled-components": "^4.1.16",
-    "@types/uuid": "^3.4.4",
     "@typescript-eslint/eslint-plugin": "^1.10.2",
     "@typescript-eslint/parser": "^1.10.2",
     "css-loader": "^3.0.0",
