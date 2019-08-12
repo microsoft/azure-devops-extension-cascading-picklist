@@ -1,6 +1,6 @@
-# cascading-picklists-extension
+# Cascading Picklists Extension
 
-This extension can be found in the [Azure DevOps Marketplace](http://marketplace.visualstudio.com)
+This extension can be found in the [Azure DevOps Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-devlabs.cascading-picklists-extension 'Download Cascading Lists extension').
 
 ## Cascading Picklists
 
@@ -20,23 +20,46 @@ Once both picklists have been created and configured, you can configure what chi
 
 ![image](./images/settings-hub-1.png)
 
+Config example:
+```json
+{
+  "version": 1,
+  "cascades": {
+      "Custom.MajorRelease": {
+          "Release Blue": {
+              "Custom.MinorRelease": [
+                  "Blue.1",
+                  "Blue.2",
+                  "Blue.3"
+              ]
+          },
+          "Release Red": {
+              "Custom.MinorRelease": [
+                  "Red.A",
+                  "Red.B",
+                  "Red.C"
+              ]
+          }
+      }
+  }
+}
+```
+
 #### Tips
 
 1. You must know the refname of the custom picklist fields. You can use [List Fields REST API](https://docs.microsoft.com/en-us/rest/api/azure/devops/wit/fields/list?view=azure-devops-rest-5.0) if you need help finding the value.
 
-2. The values setup in the picklist and the values in the configuration must be an exact match. There is not validation to check or correct spelling mistakes.
+2. The values setup in the picklist and the values in the configuration must be an exact match. There is no validation to check or correct spelling mistakes in the values.
 
 ## Get started with Extensions
 
 Building and testing the extension requires following.
 
-1.  [Download and install nodejs](http://nodejs.org 'nodejs')
-2.  [webpack](https://webpack.js.org/)
-3.  [tfx cli](https://docs.microsoft.com/en-us/vsts/extend/publish/command-line?view=vsts)
-4.  [TypeScript](https://www.typescriptlang.org/)
+1.  [Download and install NodeJS](http://nodejs.org 'NodeJS Website')
+2.  [Install tfx-cli](https://docs.microsoft.com/en-us/vsts/extend/publish/command-line?view=vsts)
 
 ```
-npm i -g typescript tfx-cli webpack-cli
+npm i -g tfx-cli
 ```
 
 Install dev prerequisites
@@ -48,24 +71,24 @@ npm install
 ### Create vsix to deploy on test environment
 
 ```
-webpack && npm run package:dev:http
+npm run build
 ```
 
 ### Run the extension server locally
 
-Execute following commands in two separate Command Prompts
+Execute following commands in two separate Command Prompts. Denote that in order to test extenstion locally, you need to have certificate and key in the project root called `private.crt` and `private.key`.
 
 ```
-webpack --watch
-npm run dev:http
+npm run watch
+npm run serve-dev
 ```
 
 ### Publish the dev extension to marketplace
 
-Follow the instructions here
+Follow the instructions here:
 
-[Package, publish, unpublish, and install VSTS extensions
-](https://docs.microsoft.com/en-us/vsts/extend/publish/overview?view=vsts)
+[Package, publish, unpublish, and install Azure DevOps extensions
+](https://docs.microsoft.com/en-us/azure/devops/extend/publish/overview?view=azure-devops)
 
 # Contributing
 

@@ -8,7 +8,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "sourceMap": true,
-    "types": ["reflect-metadata", "react-monaco-editor"],
+    "types": ["react-monaco-editor"],
     "plugins": [
       {
         "name": "typescript-tslint-plugin"
