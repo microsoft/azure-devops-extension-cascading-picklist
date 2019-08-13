@@ -97,9 +97,9 @@ class CascadingFieldsService {
                 typeof cascade.cascades[fieldValue][field] === 'string' &&
                 cascade.cascades[fieldValue][field] === FieldOptionsFlags.All
               ) {
-                cascadeOptions = (await this.workItemService.getAllowedFieldValues(
-                  field
-                )) as string[];
+                cascadeOptions = (await this.workItemService.getAllowedFieldValues(field)).map(
+                  value => value.toString()
+                );
               } else {
                 cascadeOptions = cascade.cascades[fieldValue][field] as string[];
               }
@@ -113,7 +113,6 @@ class CascadingFieldsService {
         })
       )
     );
-
     return fieldValues;
   }
 
