@@ -37,7 +37,13 @@ const Header = ({ title, status, onSaveClick }: IHeaderProps) => {
         </HeaderTitleRow>
       </HeaderTitleArea>
       <HeaderSideContainer>
-        <Button text='Save configuration' primary={true} onClick={onSaveClick} />
+        <Button
+          text='Save configuration'
+          primary={true}
+          onClick={onSaveClick}
+          disabled={!status.status}
+          tooltipProps={{ text: status.errors.map(error => error.description).join(',') }}
+        />
         <Status {...statusProps} size={StatusSize.l} />
       </HeaderSideContainer>
     </CustomHeader>
