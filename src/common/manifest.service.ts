@@ -87,7 +87,7 @@ class ManifestValidationService {
     if (missingProperties.length > 0) {
       return {
         code: ValidationErrorCode.MissingRequiredProperty,
-        description: `Property missing: ${missingProperties.join(', ')}`,
+        description: `Properties missing: ${missingProperties.join(', ')}`,
       };
     }
     return null;
@@ -126,7 +126,7 @@ class ManifestValidationService {
     if (errors && errors.length > 0) {
       return {
         code: ValidationErrorCode.InvalidCascadeConfiguration,
-        description: `Incorrect fields: ${errors.join(', ')}`,
+        description: `Invalid field refs: ${errors.join(', ')}`,
       };
     }
     return null;
