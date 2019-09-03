@@ -4,7 +4,7 @@ Create a cascading picklist between two picklists fields.
 
 #### Overview
 
-Have you ever wanted to have a picklist show only subset of values depending on the value of another field? For example maybe you two fields to track a release, major and minor release. The minor release values are tied to the major release values. In the example below, If the major release is "Blue" then only show the Blue minor releases. And when the major releae of "Red" is selected, the only show the Red minor releases.
+Have you ever wanted to have a picklist show only subset of values depending on the value of another field? For example maybe you two fields to track a release, major and minor release. The minor release values are tied to the major release values. In the example below, if the major release is "Blue" then only show the Blue minor releases. And when the major release of "Red" is selected, then only show the Red minor releases.
 
 **Release Blue**
 
@@ -21,7 +21,7 @@ Have you ever wanted to have a picklist show only subset of values depending on 
 #### How does it work?
 
 1. Create the custom fields for both the parent (major release) and child (minor release) picklists
-2. Add all the possible value for the minor release. This should include values for both Blue and Red releases
+2. Add all the possible values for the minor release. This should include values for both Blue and Red releases
 
    ![minor release picklist](images/picklist-child.png 'Configure Picklist')
 
