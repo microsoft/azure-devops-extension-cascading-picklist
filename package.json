@@ -14,7 +14,8 @@
     "postbuild": "npm run package",
     "package": "tfx extension create --manifest-globs azure-devops-extension.json",
     "gallery-publish": "tfx extension publish --rev-version",
-    "clean": "rimraf ./dist && rimraf ./*.vsix"
+    "clean": "rimraf ./dist && rimraf ./*.vsix",
+    "lint": "eslint ."
   },
   "dependencies": {
     "azure-devops-extension-api": "^1.152.3",
