@@ -27,7 +27,7 @@ SDK.init({
     const manifestService = new ManifestService(project.id);
     let manifest = await manifestService.getManifest();
     if (manifest == null) {
-      manifest = await manifestService.createDefaultManifest();
+      manifest = Object.assign({}, ManifestService.defaultManifest);
     }
     const cascadingService = new CascadingFieldsService(workItemFormService, manifest.cascades);
 

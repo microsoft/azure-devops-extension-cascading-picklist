@@ -84,7 +84,7 @@ function useConfigurationStorage(): [
       const manifestService = new ManifestService(project.id);
       let manifest = await manifestService.getManifest();
       if (manifest == null) {
-        manifest = await manifestService.createDefaultManifest();
+        manifest = Object.assign({}, ManifestService.defaultManifest);
       }
 
       saveDraft(JSON.stringify(manifest, null, 2));
