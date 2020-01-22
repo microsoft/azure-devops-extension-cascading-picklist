@@ -24,6 +24,11 @@ interface IManifestValidationError {
 class ManifestService {
   private configurationStorage: ConfigurationStorage;
 
+  public static defaultManifest: IManifest = Object.freeze({
+    version: '1',
+    cascades: {},
+  });
+
   public constructor(projectId: string) {
     this.configurationStorage = new ConfigurationStorage(ConfigurationType.Manifest, projectId);
   }
@@ -34,13 +39,6 @@ class ManifestService {
 
   public async updateManifest(manifest: IManifest): Promise<IManifest> {
     return this.configurationStorage.setConfiguration(manifest);
-  }
-
-  public async createDefaultManifest(): Promise<IManifest> {
-    return this.configurationStorage.setConfiguration({
-      version: 1,
-      cascades: {},
-    });
   }
 }
 
