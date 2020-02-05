@@ -5,6 +5,11 @@ module.exports = {
       jsx: true,
     },
   },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   rules: {
     // Indentation rule
     indent: 0,
@@ -23,7 +28,7 @@ module.exports = {
     '@typescript-eslint/ban-types': 0,
 
     // Force windows linebreak styles
-    'linebreak-style': [2, 'windows'],
+    'linebreak-style': [2, 'unix'],
 
     // Force semicolons
     semi: [2, 'always'],
