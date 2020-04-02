@@ -2,6 +2,8 @@
 
 This extension can be found in the [Azure DevOps Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-devlabs.cascading-picklists-extension 'Download Cascading Lists extension').
 
+Note that the extension is only supported on Azure DevOps Service. Is it is currently not supported on-prem yet due to a missing API.
+
 ## Cascading Picklists
 
 This extension uses the `ms.vss-work-web.work-item-form` contribution point that enables you to build a cascading picklist on the work item form. Cascading picklists are made up of two seperate fields. The parent field and a child field. The parent picklist will contain a list of values, that when a value is selected, will display the values in the child list.
