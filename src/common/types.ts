@@ -15,3 +15,8 @@ export interface IManifest {
   version?: string;
   cascades?: CascadeConfiguration;
 }
+
+export interface ICascadeSettings {
+  overrideOrgSettings?: boolean;
+  manifest?: IManifest;
+}

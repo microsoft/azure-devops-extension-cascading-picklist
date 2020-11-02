@@ -7,7 +7,7 @@ enum ScopeType {
 }
 
 enum ConfigurationType {
-  Manifest = 'manifest',
+  Manifest = 'manifest'
 }
 
 class StorageService {
@@ -29,7 +29,7 @@ class StorageService {
     }
     return this.dataService;
   }
-
+  
   public async getData(): Promise<Object> {
     const dataService = await this.getDataService();
     const dataManager = await dataService.getExtensionDataManager(
@@ -56,9 +56,15 @@ class StorageService {
 class ConfigurationStorage {
   private storageService: StorageService;
 
-  public constructor(configurationType: ConfigurationType, projectId: string) {
+  public constructor(configurationType: ConfigurationType, projectId: string = null) {
+    let key: string = `${configurationType}`;
+
+    if(projectId != null && projectId != "")
+    {
+      key = `${key}|${projectId}`;
+    }
     this.storageService = new StorageService(
-      `${configurationType}|${projectId}`,
+      `${key}`,
       ScopeType.Default
     );
   }

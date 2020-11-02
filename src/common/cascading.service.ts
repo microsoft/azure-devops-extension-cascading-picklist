@@ -155,7 +155,7 @@ class CascadeValidationService {
 
     if (this.cachedFields == null) {
       const witRestClient = await getClient(WorkItemTrackingRestClient);
-      const fields = await witRestClient.getFields(project.id);
+      const fields = (project) ? await witRestClient.getFields(project.id) : await witRestClient.getFields();
       this.cachedFields = fields;
     }
     const fieldList = this.cachedFields.map(field => field.referenceName);

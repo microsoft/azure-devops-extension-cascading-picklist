@@ -4,6 +4,41 @@ import { FieldTableItem } from '../components/FieldsTable';
 import { IProjectPageService, CommonServiceIds, getClient } from 'azure-devops-extension-api';
 import { WorkItemTrackingRestClient } from 'azure-devops-extension-api/WorkItemTracking/WorkItemTrackingClient';
 
+function getFieldPicklistsList(useProject: boolean = true): FieldTableItem[] {
+    return getPicklistsFieldsList(useProject);
+}
+
+function getPicklistsFieldsList(useProject: boolean = true): FieldTableItem[] {
+  const [fields, setFields] = useState<FieldTableItem[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      let projectId: string = null;
+
+      if(useProject == true)
+      {
+        const projectInfoService = await SDK.getService<IProjectPageService>(
+          CommonServiceIds.ProjectPageService
+        );
+        const project = await projectInfoService.getProject();
+
+        projectId = project.id;
+      }
+      
+      const witRestClient = await getClient(WorkItemTrackingRestClient);
+      const fields = (useProject) ? await witRestClient.getFields(projectId) : await witRestClient.getFields();
+      
+      setFields(
+        fields
+          .filter(field => field.isPicklist || field.isPicklistSuggested)
+          .map(field => ({ name: field.name, reference: field.referenceName }))
+      );
+    })();
+  }, []);
+
+  return fields;
+}
+
 function useProjectPicklistsList(): FieldTableItem[] {
   const [fields, setFields] = useState<FieldTableItem[]>([]);
 
@@ -26,4 +61,4 @@ function useProjectPicklistsList(): FieldTableItem[] {
   return fields;
 }
 
-export { useProjectPicklistsList };
+export { getFieldPicklistsList, useProjectPicklistsList };

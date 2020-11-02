@@ -2,7 +2,7 @@
   "manifestVersion": 1.0,
   "id": "cascading-picklists-extension",
   "publisher": "ms-devlabs",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "name": "Cascading Lists",
   "description": "Extension allows to define cascading behavior for picklists in work item form.",
   "public": true,
@@ -61,6 +61,19 @@
         "name": "Cascading Lists",
         "order": 1,
         "uri": "/dist/confighub.html"
+      }
+    },
+    {
+      "id": "cascading-lists-org-config-hub",
+      "type": "ms.vss-web.hub",
+      "description": "Configuration hub for a cascading lists",
+      "targets": [
+        "ms.vss-web.collection-admin-hub-group"
+      ],
+      "properties": {
+        "name": "Cascading Lists",
+        "order": 1,
+        "uri": "/dist/confighub.html?orglevel=1"
       }
     }
   ],

@@ -11,6 +11,7 @@ import {
 import * as SDK from 'azure-devops-extension-sdk';
 import { CascadingFieldsService } from '../common/cascading.service';
 import { ManifestService } from '../common/manifest.service';
+import { IManifest } from '../common/types';
 
 SDK.init({
   applyTheme: true,
@@ -25,7 +26,13 @@ SDK.init({
     );
     const project = await projectInfoService.getProject();
     const manifestService = new ManifestService(project.id);
-    let manifest = await manifestService.getManifest();
+    //let manifest = await manifestService.getManifest();
+    let manifest: IManifest = null
+    let settings = await manifestService.getConfigurationSettings();
+    
+    if (settings != null)
+      manifest = settings.manifest;
+      
     if (manifest == null) {
       manifest = Object.assign({}, ManifestService.defaultManifest);
     }

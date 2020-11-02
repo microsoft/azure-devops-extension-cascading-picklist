@@ -1,5 +1,5 @@
 import { ConfigurationStorage, ConfigurationType } from './storage.service';
-import { IManifest } from './types';
+import { IManifest, ICascadeSettings } from './types';
 import { CascadeValidationService } from './cascading.service';
 
 type Validator = (manifest: IManifest) => Promise<null | IManifestValidationError>;
@@ -23,22 +23,52 @@ interface IManifestValidationError {
 
 class ManifestService {
   private configurationStorage: ConfigurationStorage;
+  private orgLevelConfigurationStorage: ConfigurationStorage;
+  private projectId: string;
 
   public static defaultManifest: IManifest = Object.freeze({
     version: '1',
     cascades: {},
   });
 
-  public constructor(projectId: string) {
-    this.configurationStorage = new ConfigurationStorage(ConfigurationType.Manifest, projectId);
+  public constructor(projId: string = null) {
+    this.projectId = projId;
+    this.configurationStorage = new ConfigurationStorage(ConfigurationType.Manifest, this.projectId);
+    this.orgLevelConfigurationStorage = new ConfigurationStorage(ConfigurationType.Manifest);
   }
 
+  /*
   public async getManifest(): Promise<IManifest> {
     return this.configurationStorage.getConfiguration();
   }
 
   public async updateManifest(manifest: IManifest): Promise<IManifest> {
     return this.configurationStorage.setConfiguration(manifest);
+  }
+  */
+
+  public async getConfigurationSettings(): Promise<ICascadeSettings> {
+    // Handle if the configuration is stored for the project or for the org
+    let settings: ICascadeSettings = await this.configurationStorage.getConfiguration();
+    if(settings == null)
+    {
+      return this.orgLevelConfigurationStorage.getConfiguration();
+    }
+    else
+    {
+      if(settings.overrideOrgSettings == true)
+      {
+        return settings;
+      }
+      else
+      {
+        return this.orgLevelConfigurationStorage.getConfiguration();
+      }
+    }
+  }
+
+  public async updateConfigurationSettings(configurationSettings: ICascadeSettings): Promise<ICascadeSettings> {
+    return this.configurationStorage.setConfiguration(configurationSettings);
   }
 }
 
