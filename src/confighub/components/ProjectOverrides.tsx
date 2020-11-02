@@ -46,7 +46,6 @@ const ProjectOverrides = ({ isVisible, toggle }: IProjectOverridesProps) => {
             Configure the JSON rules that drive how the cascading picklist would work. 
             This is inherited from the Organization level unless overriden here.   
         </Card>
-        <Table ariaLabel="Basic Table" columns={fixedColumns} />
         <Toggle
             onText={"Override Organization Cascading rules"}
             offText={"Override Organization Cascading rules"}
