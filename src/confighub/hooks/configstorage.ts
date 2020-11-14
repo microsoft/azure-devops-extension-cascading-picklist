@@ -103,10 +103,10 @@ function useConfigurationStorage(useProject: boolean = true, toggleValue: Observ
   }
 
   async function toggleHandler(override: boolean): Promise<void> {
-    console.log(`toggleHandler: Assigning toggle override flag to ${override}`);
+    console.log(`toggleHandler: Assigning toggle override flag to ${override} with useProject= ${useProject}`);
     setEditorOptions({
       selectOnLineNumbers: true,
-      readOnly: (!override || (useProject == false))
+      readOnly: ((!override && useProject) || (!useProject && !override))
     });
 
     setOverrideFlag(override);
@@ -118,12 +118,18 @@ function useConfigurationStorage(useProject: boolean = true, toggleValue: Observ
 
       if(useProject == true)
       {
+        try{
         console.log('Retrieving project Id');
+        
         const projectInfoService = await SDK.getService<IProjectPageService>(
           CommonServiceIds.ProjectPageService
         );
         const project = await projectInfoService.getProject();
         projectId = project.id;        
+      } catch (error) {
+        console.log('TEST: Failed to retrieve project Id');
+        projectId = "000-000-000";
+      }
       }
       
       const manifestService = new ManifestService(projectId);
