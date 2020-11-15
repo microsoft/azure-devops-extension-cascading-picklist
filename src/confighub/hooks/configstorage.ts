@@ -102,14 +102,14 @@ function useConfigurationStorage(useProject: boolean = true, toggleValue: Observ
     setConfig(savedSettings.manifest);
   }
 
-  async function toggleHandler(override: boolean): Promise<void> {
-    console.log(`toggleHandler: Assigning toggle override flag to ${override} with useProject= ${useProject}`);
+  async function toggleHandler(allowOverride: boolean): Promise<void> {
+    console.log(`toggleHandler: Assigning toggle override flag to ${allowOverride} with useProject= ${useProject}`);
     setEditorOptions({
       selectOnLineNumbers: true,
-      readOnly: ((!override && useProject) || (!useProject && !override))
+      readOnly: !((allowOverride == true && useProject == true) || (useProject == false))
     });
 
-    setOverrideFlag(override);
+    setOverrideFlag(allowOverride);
   }
 
   useEffect(() => {
@@ -118,7 +118,6 @@ function useConfigurationStorage(useProject: boolean = true, toggleValue: Observ
 
       if(useProject == true)
       {
-        try{
         console.log('Retrieving project Id');
         
         const projectInfoService = await SDK.getService<IProjectPageService>(
@@ -126,10 +125,6 @@ function useConfigurationStorage(useProject: boolean = true, toggleValue: Observ
         );
         const project = await projectInfoService.getProject();
         projectId = project.id;        
-      } catch (error) {
-        console.log('TEST: Failed to retrieve project Id');
-        projectId = "000-000-000";
-      }
       }
       
       const manifestService = new ManifestService(projectId);
@@ -145,6 +140,14 @@ function useConfigurationStorage(useProject: boolean = true, toggleValue: Observ
         console.log(`Assigning overrideOrgSettings: ${settings.overrideOrgSettings}`);
         toggleValue.value = settings.overrideOrgSettings;
         setOverrideToggle(new ObservableValue<boolean>(settings.overrideOrgSettings));
+      }
+      else
+      {
+        if(useProject  == true)
+        {
+          toggleValue.value = false;
+          setOverrideToggle(new ObservableValue<boolean>(false));
+        }
       }
 
       if (manifest == null) {

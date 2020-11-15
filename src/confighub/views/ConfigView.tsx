@@ -57,7 +57,7 @@ const ConfigView: React.FC<RouteComponentProps<any>> = (rcprops) => {
 
   async function onCascadeSettingsOverrideToggle(value: boolean, action: string)
   {
-    console.log('onCascadeSettingsOverrideToggle: Raisinng toggle value change.');
+    console.log('onCascadeSettingsOverrideToggle: Raising toggle value change.');
     await toggleHandler(value);
   }
 
