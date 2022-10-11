@@ -10,7 +10,7 @@
     "package-dev": "tfx extension create --manifest-globs azure-devops-extension.json --overrides-file azure-devops-extension-dev.json",
     "serve-dev": "npx http-server ./ -p 44300 -a 127.0.0.1 -S -C .\\private.crt -K private.key -c-1",
     "watch": "webpack --watch",
-    "build": "webpack -p --mode=production",
+    "build:release": "webpack -p --mode=production",
     "postbuild": "npm run package",
     "package": "tfx extension create --manifest-globs azure-devops-extension.json",
     "gallery-publish": "tfx extension publish --rev-version",
