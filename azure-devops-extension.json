@@ -5,7 +5,6 @@
   "version": "0.1.16",
   "name": "Cascading Lists",
   "description": "Extension allows to define cascading behavior for picklists in work item form.",
-  "public": true,
   "categories": [
     "Azure Boards"
   ],

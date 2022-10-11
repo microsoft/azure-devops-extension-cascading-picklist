@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "build-dev": "webpack -p --mode=development",
-    "package-dev": "tfx extension create --manifest-globs azure-devops-extension.json --overrides-file azure-devops-extension-dev.json",
+    "package-dev": "tfx extension create --manifest-globs azure-devops-extension.json --overrides-file configs/dev.json",
     "serve-dev": "npx http-server ./ -p 44300 -a 127.0.0.1 -S -C .\\private.crt -K private.key -c-1",
     "watch": "webpack --watch",
     "build:release": "webpack -p --mode=production",
