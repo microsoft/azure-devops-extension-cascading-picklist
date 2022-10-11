@@ -1,0 +1,7 @@
+{
+    "id": "cascading-picklists-extension-dev",
+    "name": "Cascading Lists (dev)",
+    "publisher": "ms-devlabs",
+    "public": false,
+    "baseUri": "https://localhost:44300"
+}   
