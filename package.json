@@ -6,12 +6,13 @@
   "description": "Extenstion that allows to customize cascading picklists for Azure DevOps.",
   "private": true,
   "scripts": {
-    "build-dev": "webpack -p --mode=development",
+    "start": "webpack-dev-server --hot --progress --static ./ --port 44300 --https",
+    "build-dev": "webpack  --mode=development",
     "package-dev": "tfx extension create --manifest-globs azure-devops-extension.json --overrides-file configs/dev.json",
     "package-release": "tfx extension create --manifest-globs azure-devops-extension.json --overrides-file configs/release.json",
     "serve-dev": "npx http-server ./ -p 44300 -a 127.0.0.1 -S -C .\\private.crt -K private.key -c-1",
     "watch": "webpack --watch",
-    "build:release": "webpack -p --mode=production",
+    "build:release": "webpack --mode=production",
     "postbuild": "npm run package",
     "package": "tfx extension create --manifest-globs azure-devops-extension.json",
     "gallery-publish": "tfx extension publish --rev-version",
@@ -19,6 +20,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+  
     "azure-devops-extension-api": "^1.152.3",
     "azure-devops-extension-sdk": "^2.0.10",
     "azure-devops-ui": "^1.154.1",
@@ -27,8 +29,10 @@
     "react-dom": "^16.8.6",
     "react-monaco-editor": "^0.26.2",
     "styled-components": "^4.3.1"
+    
   },
   "devDependencies": {
+    "webpack-dev-server": "^4.11.1",
     "@types/lodash": "^4.14.135",
     "@types/react": "^16.8.20",
     "@types/react-dom": "^16.8.4",
@@ -54,6 +58,6 @@
     "typescript": "^3.5.2",
     "typescript-styled-plugin": "^0.14.0",
     "webpack": "^4.33.0",
-    "webpack-cli": "^3.3.3"
+    "webpack-cli": "^4.10.0"
   }
 }
