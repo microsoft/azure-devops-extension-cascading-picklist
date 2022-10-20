@@ -7,11 +7,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const observerConfig = {
   entry: './src/observer/index.ts',
-  mode: 'production',
+  mode: 'development',
   output: {
     filename: 'observer.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  devtool: 'source-map',
 
   resolve: {
     extensions: ['.json', '.ts', '.tsx', '.js'],
@@ -42,6 +43,8 @@ const confighubConfig = {
     filename: 'confighub.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  devtool: 'source-map',
+
   resolve: {
     extensions: ['.json', '.ts', '.tsx', '.js'],
   },
