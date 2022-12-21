@@ -1,3 +1,7 @@
+private.cer
+private.csr
+private.pem
+
 # Logs
 logs
 *.log

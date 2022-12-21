@@ -1,7 +1,8 @@
 {
-    "id": "cascading-picklists-extension-dev",
-    "name": "Cascading Lists (dev)",
-    "publisher": "ms-devlabs",
-    "public": false,
-    "baseUri": "https://localhost:44300"
-}   
+  "id": "cascading-reasons-picklists-extension-dev",
+  "name": "Cascading Reasons Lists (dev)",
+  "publisher": "esmailbenmoussa",
+  "public": false,
+  "baseUri": "https://localhost:44300"
+}
+

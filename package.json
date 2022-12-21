@@ -1,7 +1,7 @@
 {
-  "name": "cascading-picklists-extenstion",
+  "name": "cascading-reasons-picklists-extenstion",
   "version": "1.0.0",
-  "author": "Anton Kovalyov",
+  "author": "Esmail Ben Moussa",
   "license": "",
   "description": "Extenstion that allows to customize cascading picklists for Azure DevOps.",
   "private": true,
@@ -55,3 +55,4 @@
     "webpack-dev-server": "^4.11.1"
   }
 }
+

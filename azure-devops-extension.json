@@ -1,16 +1,12 @@
 {
   "manifestVersion": 1.0,
-  "id": "cascading-picklists-extension",
-  "publisher": "ms-devlabs",
+  "id": "cascading-reason-picklists-extension",
+  "publisher": "esmailbenmoussa",
   "version": "0.1.16",
-  "name": "Cascading Lists",
+  "name": "Cascading Reasons Lists",
   "description": "Extension allows to define cascading behavior for picklists in work item form.",
-  "categories": [
-    "Azure Boards"
-  ],
-  "tags": [
-    "Cascading Picklists"
-  ],
+  "categories": ["Azure Boards"],
+  "tags": ["Cascading Reason Picklists"],
   "icons": {
     "default": "images/icon-default.png",
     "large": "images/icon-large.png"
@@ -32,18 +28,13 @@
     "type": "git",
     "url": "https://github.com/microsoft/azure-devops-extension-cascading-picklist"
   },
-  "scopes": [
-    "vso.work",
-    "vso.work_write"
-  ],
+  "scopes": ["vso.work", "vso.work_write"],
   "contributions": [
     {
       "id": "cascading-lists-wit-observer",
       "type": "ms.vss-work-web.work-item-notifications",
       "description": "Observer modifies behavior of a work item form to support cascading picklists.",
-      "targets": [
-        "ms.vss-work-web.work-item-form"
-      ],
+      "targets": ["ms.vss-work-web.work-item-form"],
       "properties": {
         "name": "Cascading Lists Observer",
         "uri": "/dist/observer.html"
@@ -53,9 +44,7 @@
       "id": "cascading-lists-config-hub",
       "type": "ms.vss-web.hub",
       "description": "Configuration hub for a cascading lists",
-      "targets": [
-        "ms.vss-web.project-admin-hub-group"
-      ],
+      "targets": ["ms.vss-web.project-admin-hub-group"],
       "properties": {
         "name": "Cascading Lists",
         "order": 1,
@@ -78,3 +67,4 @@
     }
   ]
 }
+
