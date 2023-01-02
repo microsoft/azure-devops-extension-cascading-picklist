@@ -95,13 +95,13 @@ class CascadingFieldsService {
               let cascadeOptions: string[];
               if (
                 typeof cascade.cascades[fieldValue][field] === 'string' &&
-                cascade.cascades[fieldValue][field] === FieldOptionsFlags.All
+                cascade.cascades[fieldValue]['fieldProperties'][field] === FieldOptionsFlags.All
               ) {
                 cascadeOptions = (await this.workItemService.getAllowedFieldValues(field)).map(
                   value => value.toString()
                 );
               } else {
-                cascadeOptions = cascade.cascades[fieldValue][field] as string[];
+                cascadeOptions = cascade.cascades[fieldValue]['fieldProperties'][field] as string[];
               }
               if (fieldValues.hasOwnProperty(field)) {
                 fieldValues[field] = intersection(fieldValues[field], cascadeOptions);
@@ -180,3 +180,4 @@ class CascadeValidationService {
 }
 
 export { CascadingFieldsService, CascadeValidationService, ICascadeValidatorError };
+
