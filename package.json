@@ -8,9 +8,9 @@
   "scripts": {
     "start": "webpack-dev-server --hot --progress --static ./ --port 44300 --https",
     "build-dev": "webpack --progress --config webpack.dev.config.js",
+    "build-release": "webpack --progress",
     "package-dev": "tfx extension create --manifest-globs azure-devops-extension.json --overrides-file configs/dev.json",
     "package-release": "tfx extension create --manifest-globs azure-devops-extension.json --overrides-file configs/release.json",
-    "build:release": "webpack --progress",
     "postbuild": "npm run package",
     "package": "tfx extension create --manifest-globs azure-devops-extension.json",
     "gallery-publish": "tfx extension publish --rev-version",
