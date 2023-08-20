@@ -59,7 +59,7 @@ Config example:
 
 2. [Install tfx-cli](https://docs.microsoft.com/en-us/vsts/extend/publish/command-line?view=vsts)
     ```
-        npm install --global tfx-cli
+    npm install --global tfx-cli
     ```
 
 3. Install dev prerequisites
@@ -82,6 +82,8 @@ npm run package-dev
 ```
 
 Then install the extension.
+This only has to be done once.
+After installing the extension, additional changes will be served by webpack.
 
 Serve the extension locally:
 ```
