@@ -38,7 +38,7 @@ const Header = ({ title, status, onSaveClick }: IHeaderProps) => {
       </HeaderTitleArea>
       <HeaderSideContainer>
         <Button
-          text='Save configuration Test'
+          text='Save configuration'
           primary={true}
           onClick={onSaveClick}
           disabled={!status.status}
