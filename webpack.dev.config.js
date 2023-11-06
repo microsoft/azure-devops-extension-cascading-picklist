@@ -11,6 +11,7 @@ const observerConfig = {
   output: {
     filename: 'observer.js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/dist/'
   },
   devtool: 'source-map',
 
@@ -33,7 +34,7 @@ const observerConfig = {
     new HtmlWebpackPlugin({
       filename: 'observer.html',
     }),
-  ],
+  ]
 };
 
 const confighubConfig = {
@@ -42,6 +43,7 @@ const confighubConfig = {
   output: {
     filename: 'confighub.js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/dist/'
   },
   devtool: 'source-map',
 
