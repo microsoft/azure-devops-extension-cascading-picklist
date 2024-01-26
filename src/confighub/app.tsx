@@ -5,6 +5,8 @@ import ConfigView from './views/ConfigView';
 
 const App = () => {
   useEffect(() => {
+    
+    
     SDK.notifyLoadSucceeded();
   }, []);
 
