@@ -8,9 +8,11 @@ import {
   IWorkItemNotificationListener,
   WorkItemTrackingServiceIds,
 } from 'azure-devops-extension-api/WorkItemTracking/WorkItemTrackingServices';
-import * as SDK from 'azure-devops-extension-sdk';
+ startCase
 import { CascadingFieldsService } from '../common/cascading.service';
 import { ManifestService } from '../common/manifest.service';
+import SDK from '../SDK';
+import { startCase } from 'lodash';
 
 SDK.init({
   applyTheme: true,
