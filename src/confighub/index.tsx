@@ -4,6 +4,9 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import App from './app';
 
-SDK.init();
+SDK.init({
+  applyTheme: true,
+  loaded: false,
+});
 
 ReactDOM.render(<App />, document.getElementById('root'));

@@ -18,8 +18,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "azure-devops-extension-api": "^2.226.0",
-    "azure-devops-extension-sdk": "^4.0.1",
+    "azure-devops-extension-api": "^4.231.0",
+    "azure-devops-extension-sdk": "^4.0.2",
     "azure-devops-ui": "^1.154.1",
     "lodash": "^4.17.21",
     "npm": "^6.14.18",
