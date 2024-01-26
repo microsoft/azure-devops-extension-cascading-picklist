@@ -13,10 +13,7 @@ import { CascadingFieldsService } from '../common/cascading.service';
 import { ManifestService } from '../common/manifest.service';
 import SDK from '../SDK';
 
-SDK.init({
-  applyTheme: true,
-  loaded: false,
-}).then(
+SDK.init().then(
   async (): Promise<void> => {
     const workItemFormService = await SDK.getService<IWorkItemFormService>(
       WorkItemTrackingServiceIds.WorkItemFormService
