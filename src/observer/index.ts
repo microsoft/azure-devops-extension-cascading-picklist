@@ -45,7 +45,7 @@ const initialize = async () => {
   await SDK.notifyLoadSucceeded();
 }
 
-initialize()
+await initialize()
 SDK.init({
   applyTheme: true,
   loaded: false,
