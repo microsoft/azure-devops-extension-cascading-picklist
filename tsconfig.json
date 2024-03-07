@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+   
+    
+    "module": "commonjs",
+    "target": "es2017",
+   
     "rootDir": "src/",
     "outDir": "dist/",
     "lib": ["es7", "dom", "esnext"],

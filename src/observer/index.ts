@@ -45,11 +45,12 @@ const initialize = async () => {
   await SDK.notifyLoadSucceeded();
 }
 
-await initialize()
-SDK.init({
-  applyTheme: true,
-  loaded: false,
-});
-
+(async function() {
+  await initialize();
+  SDK.init({
+    applyTheme: true,
+    loaded: false,
+  });
+})();
 
 
