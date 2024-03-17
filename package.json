@@ -18,8 +18,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "azure-devops-extension-api": "^2.226.0",
-    "azure-devops-extension-sdk": "^4.0.1",
+    "azure-devops-extension-api": "^1.152.3",
+    "azure-devops-extension-sdk": "^2.0.10",
     "azure-devops-ui": "^1.154.1",
     "lodash": "^4.17.21",
     "react": "^16.8.6",
@@ -50,7 +50,7 @@
     "ts-loader": "^9.4.2",
     "typescript": "^4.9.4",
     "typescript-styled-plugin": "^0.14.0",
-    "webpack": "^5.76.0",
+    "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.11.1"
   }
