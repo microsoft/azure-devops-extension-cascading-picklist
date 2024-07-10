@@ -1,10 +1,14 @@
 # Cascading Picklists
 
-Create a cascading picklist between two picklists fields.
-
-#### Overview
-
 Have you ever wanted to have a picklist show only subset of values depending on the value of another field? For example maybe you two fields to track a release, major and minor release. The minor release values are tied to the major release values. In the example below, if the major release is "Blue" then only show the Blue minor releases. And when the major release of "Red" is selected, then only show the Red minor releases.
+
+
+# Documentation
+
+
+## Cascading Picklists
+
+This extension uses the `ms.vss-work-web.work-item-form` contribution point that enables you to build a cascading picklist on the work item form. Cascading picklists are made up of two seperate fields. The parent field and a child field. The parent picklist will contain a list of values, that when a value is selected, will display the values in the child list
 
 **Release Blue**
 
@@ -62,3 +66,20 @@ Have you ever wanted to have a picklist show only subset of values depending on 
 #### Known issues
 
 - Work item forms with many extensions installed can delay the loading of the cascading picklist extension. Therefore the child/parent relationship may not be visible for several seconds. If that happens, we recommend that you remove any non-essential extensions from the form.
+
+#### Tips
+
+1. You must know the refname of the custom picklist fields. You can use [List Fields REST API](https://docs.microsoft.com/en-us/rest/api/azure/devops/wit/fields/list?view=azure-devops-rest-5.0) if you need help finding the value.
+
+2. The values setup in the picklist and the values in the configuration must be an exact match. There is no validation to check or correct spelling mistakes in the values.
+
+# Support
+
+## How to file issues and get help
+
+This project uses [GitHub Issues](https://github.com/microsoft/azure-devops-extension-cascading-picklist/issues) to track bugs and feature requests. Please search the existing issues before filing new issues to avoid duplicates. For new issues, file your bug or feature request as a new Issue. 
+
+## Microsoft Support Policy
+Support for this project is limited to the resources listed above.
+
+
