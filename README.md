@@ -59,7 +59,7 @@ Support for this project is limited to the resources listed above.
 
 ## Contributing
 
-We welcome contributions to improve the WSJF (Weighted Shortest Job First) for Azure DevOps extension. If you would like to contribute, please fork the repository and create a pull request with your changes. Your contributions help enhance the functionality and usability of the extension for the entire community
+We welcome contributions to improve Cascading Picklists Azure DevOps extension. If you would like to contribute, please fork the repository and create a pull request with your changes. Your contributions help enhance the functionality and usability of the extension for the entire community
 
 
 ## Microsoft DevLabs
