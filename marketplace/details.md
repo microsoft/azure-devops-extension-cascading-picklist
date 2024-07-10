@@ -1,10 +1,9 @@
 # Cascading Picklists
 
-Create a cascading picklist between two picklists fields.
-
-#### Overview
-
 Have you ever wanted to have a picklist show only subset of values depending on the value of another field? For example maybe you two fields to track a release, major and minor release. The minor release values are tied to the major release values. In the example below, if the major release is "Blue" then only show the Blue minor releases. And when the major release of "Red" is selected, then only show the Red minor releases.
+
+
+# Documentation
 
 **Release Blue**
 
@@ -62,3 +61,13 @@ Have you ever wanted to have a picklist show only subset of values depending on 
 #### Known issues
 
 - Work item forms with many extensions installed can delay the loading of the cascading picklist extension. Therefore the child/parent relationship may not be visible for several seconds. If that happens, we recommend that you remove any non-essential extensions from the form.
+
+# Support
+
+## How to file issues and get help
+
+This project uses [GitHub Issues](https://github.com/microsoft/azure-devops-extension-cascading-picklist/issues) to track bugs and feature requests. Please search the existing issues before filing new issues to avoid duplicates. For new issues, file your bug or feature request as a new Issue. 
+
+## Microsoft DevLabs
+Microsoft DevLabs is an outlet for experiments from Microsoft, experiments that represent some of the latest ideas around developer tools. Solutions in this category are designed for broad usage, and you are encouraged to use and provide feedback on them; however, these extensions are not supported nor are any commitments made as to their longevity.
+
