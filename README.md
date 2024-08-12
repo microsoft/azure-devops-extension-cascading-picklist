@@ -4,7 +4,7 @@ Have you ever wanted to have a picklist show only subset of values depending on 
 
 # Documentation 
 
-For detailed instructions on using the Cascading Picklists Extension Azure DevOps extension, please refer to the official documentation. You can access the comprehensive guide by clicking [Market place](https://marketplace.visualstudio.com/items?itemName=ms-devlabs.cascading-picklists-extension). This resource provides step-by-step information to help you effectively utilize the Cascading Picklists Extension features within your Azure DevOps environment.
+For detailed instructions on using the Cascading Picklists Extension Azure DevOps extension, please refer to the official documentation. You can access the comprehensive guide by clicking [Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-devlabs.cascading-picklists-extension). This resource provides step-by-step information to help you effectively utilize the Cascading Picklists Extension features within your Azure DevOps environment.
 
 > Note that the extension is only supported on Azure DevOps Service. Is it is currently not supported on-prem yet due to a missing API.
 
