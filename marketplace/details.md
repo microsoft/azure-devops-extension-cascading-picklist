@@ -2,9 +2,7 @@
 
 Have you ever wanted to have a picklist show only subset of values depending on the value of another field? For example maybe you two fields to track a release, major and minor release. The minor release values are tied to the major release values. In the example below, if the major release is "Blue" then only show the Blue minor releases. And when the major release of "Red" is selected, then only show the Red minor releases.
 
-
 # Documentation
-
 
 ## Cascading Picklists
 
@@ -77,9 +75,8 @@ This extension uses the `ms.vss-work-web.work-item-form` contribution point that
 
 ## How to file issues and get help
 
-This project uses [GitHub Issues](https://github.com/microsoft/azure-devops-extension-cascading-picklist/issues) to track bugs and feature requests. Please search the existing issues before filing new issues to avoid duplicates. For new issues, file your bug or feature request as a new Issue. 
+This project uses [GitHub Issues](https://github.com/microsoft/azure-devops-extension-cascading-picklist/issues) to track bugs and feature requests. Please search the existing issues before filing new issues to avoid duplicates. For new issues, file your bug or feature request as a new Issue.
 
 ## Microsoft Support Policy
+
 Support for this project is limited to the resources listed above.
-
-
