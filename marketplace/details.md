@@ -25,11 +25,11 @@ Cascading picklists are made up of two seperate fields. The parent field and a c
 1. Create the custom fields for both the parent (major release) and child (minor release) picklists
 2. Add all the possible values for the minor release. This should include values for both Blue and Red releases
 
-   ![minor release picklist](../images/picklist-child.png 'Configure Picklist')
+   ![minor release picklist](images/picklist-child.png 'Configure Picklist')
 
 3. Once both picklists have been created and configured, you can configure what child picklist values will be displayed. You do this by going to the "Cascading Lists" Hub in project settings. From here, configure the value for the parent picklist, so that when selected, the child values will be displayed.
 
-   ![image](../images/settings-hub-1.png)
+   ![image](images/settings-hub-1.png)
 
 From here you can configure the JSON rules that drive how the cascading picklist would work. Below is the sample for Major and Minor releases.
 
@@ -59,7 +59,7 @@ From here you can configure the JSON rules that drive how the cascading picklist
 
 4. Go create a new Feature work item to see it in action. Select "Release Blue" and notice how only the blue values are displayed in the Minor Release field. Select "Release Red" and you will only see the Red minor release items.
 
-   ![picklist demo](../images/picklist-demo.gif)
+   ![picklist demo](images/picklist-demo.gif)
 
 ## Supported Features
 
