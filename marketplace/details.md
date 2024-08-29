@@ -59,7 +59,7 @@ From here you can configure the JSON rules that drive how the cascading picklist
 
 4. Go create a new Feature work item to see it in action. Select "Release Blue" and notice how only the blue values are displayed in the Minor Release field. Select "Release Red" and you will only see the Red minor release items.
 
-   ![picklist demo](./images/picklist-demo.gif 'picklist demo')
+   ![picklist demo](./images/picklist-demo.gif)
 
 ## Supported Features
 
