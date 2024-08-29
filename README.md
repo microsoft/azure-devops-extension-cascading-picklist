@@ -19,8 +19,9 @@ Support for this project is limited to the resources listed above.
 
 # Contributing
 
-We welcome contributions to improve the extension. If you would like to contribute, please fork the repository and create a pull request with your changes. Your 
-contributions help enhance the functionality and usability of the extension for the entire community.
+We welcome contributions to improve the extension. If you would like to contribute, please fork the repository and create a pull request with your changes. Your contributions help enhance the functionality and usability of the extension for the entire community.
+
+This extension uses the `ms.vss-work-web.work-item-form` contribution point that enables you to build a cascading picklist on the work item form. See https://learn.microsoft.com/en-us/azure/devops/extend/develop/add-workitem-extension?view=azure-devops for more information about how work item form extensibility works.
 
 **Note:** do not publish the extension as a public extension under a different publisher as this will create a clone of the extension and it will be unclear to the 
 community which one to use. If you feel you don't want to contribute to this repository then publish a private version for your use-case.
@@ -37,7 +38,7 @@ npm install
 npm run start
 
 # Build the extension
-npm run build
+npm run build-dev
 ```
 ## About Microsoft DevLabs
 

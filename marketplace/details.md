@@ -6,7 +6,7 @@ Have you ever wanted to have a picklist show only subset of values depending on 
 
 ## Cascading Picklists
 
-This extension uses the `ms.vss-work-web.work-item-form` contribution point that enables you to build a cascading picklist on the work item form. Cascading picklists are made up of two seperate fields. The parent field and a child field. The parent picklist will contain a list of values, that when a value is selected, will display the values in the child list
+Cascading picklists are made up of two seperate fields. The parent field and a child field. The parent picklist will contain a list of values, that when a value is selected, will display the values in the child list
 
 **Release Blue**
 
@@ -20,7 +20,7 @@ This extension uses the `ms.vss-work-web.work-item-form` contribution point that
 - Red.B
 - Red.C
 
-#### How does it work?
+## How does it work?
 
 1. Create the custom fields for both the parent (major release) and child (minor release) picklists
 2. Add all the possible values for the minor release. This should include values for both Blue and Red releases
@@ -29,7 +29,7 @@ This extension uses the `ms.vss-work-web.work-item-form` contribution point that
 
 3. Open the "Cascading List" hub in project settings. From here you can configure the JSON rules that drive how the cascading picklist would work. Below is the sample for Major and Minor releases.
 
-   ```
+   ```json
    {
      "version": "1.0",
      "cascades": {
@@ -57,15 +57,15 @@ This extension uses the `ms.vss-work-web.work-item-form` contribution point that
 
    ![picklist demo](images/picklist-demo.gif 'picklist demo')
 
-#### Supported Features
+## Supported Features
 
 - Setup cascading picklist between two fields
 
-#### Known issues
+## Known issues
 
 - Work item forms with many extensions installed can delay the loading of the cascading picklist extension. Therefore the child/parent relationship may not be visible for several seconds. If that happens, we recommend that you remove any non-essential extensions from the form.
 
-#### Tips
+## Tips
 
 1. You must know the refname of the custom picklist fields. You can use [List Fields REST API](https://docs.microsoft.com/en-us/rest/api/azure/devops/wit/fields/list?view=azure-devops-rest-5.0) if you need help finding the value.
 
