@@ -42,6 +42,14 @@ const confighubConfig = {
     filename: 'confighub.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, './'),
+    },
+    hot: true,
+    port: 44300,
+    server: 'https',
+  },
   resolve: {
     extensions: ['.json', '.ts', '.tsx', '.js'],
   },
