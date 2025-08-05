@@ -39,7 +39,7 @@ module.exports = [
       // Allow logs
       'no-console': 1,
 
-      // Force no ununsed variables
+      // Force no unused variables
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': 2,
 
