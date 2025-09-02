@@ -44,7 +44,7 @@ function useConfigurationStorage(): [
           errors: [],
         });
       }
-    } catch (error) {
+    } catch {
       setStatus({
         status: false,
         errors: [
