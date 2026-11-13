@@ -72,6 +72,18 @@ class CascadingFieldsService {
     }
   }
 
+  public async resetCascade(field: string): Promise<void[]> {
+    const index = Object.keys(this.cascadeMap).findIndex(item => item == field);
+    const fields = Object.values(this.cascadeMap)[index].alters;
+    const fieldsToReset = new Set<string>(fields);
+    return Promise.all(
+      Array.from(fieldsToReset).map(async fieldName => {
+        const values = await this.workItemService.getAllowedFieldValues(fieldName);
+        await (this.workItemService as any).filterAllowedFieldValues(fieldName, values);
+      })
+    );
+  }
+
   public async resetAllCascades(): Promise<void[]> {
     const fields = flatten(Object.values(this.cascadeMap).map(value => value.alters));
     const fieldsToReset = new Set<string>(fields);
@@ -123,20 +135,29 @@ class CascadingFieldsService {
   }
 
   public async performCascading(changedFieldReferenceName: string): Promise<void[]> {
-    const changedFieldValue = (await this.workItemService.getFieldValue(
-      changedFieldReferenceName
-    )) as string;
-    if (!this.cascadeMap.hasOwnProperty(changedFieldReferenceName)) {
-      return;
+    try {
+      const changedFieldValue = (await this.workItemService.getFieldValue(
+        changedFieldReferenceName
+      )) as string;
+      if (!this.cascadeMap.hasOwnProperty(changedFieldReferenceName)) {
+        return;
+      }
+  
+      if (!changedFieldValue) {
+        this.resetCascade(changedFieldReferenceName);
+        return;
+      }
+
+      const affectedFields = this.getAffectedFields(changedFieldReferenceName, changedFieldValue);
+      const fieldValues = await this.prepareCascadeOptions(affectedFields);
+  
+      Object.entries(fieldValues).map(async ([fieldName, fieldValues]) => {
+        await (this.workItemService as any).filterAllowedFieldValues(fieldName, fieldValues);
+        await this.validateFilterOrClean(fieldName);
+      });
+    } catch {
+      this.cascadeAll();
     }
-
-    const affectedFields = this.getAffectedFields(changedFieldReferenceName, changedFieldValue);
-    const fieldValues = await this.prepareCascadeOptions(affectedFields);
-
-    Object.entries(fieldValues).map(async ([fieldName, fieldValues]) => {
-      await (this.workItemService as any).filterAllowedFieldValues(fieldName, fieldValues);
-      await this.validateFilterOrClean(fieldName);
-    });
   }
 }
 
